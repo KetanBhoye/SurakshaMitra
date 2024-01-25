@@ -2,4 +2,6 @@
     <string name="app_name">SurakshaMitra</string>
     <string name="surakshamitra_app_logo">SurakchaMitra app logo</string>
     <string name="marathi_appname">सुरक्षामित्र\n</string>
+    <string name="apptagline">|| सुरक्षितं जीवनं विधाय ||</string>
+    <string name="create_login">Create Login</string>
 </resources>
