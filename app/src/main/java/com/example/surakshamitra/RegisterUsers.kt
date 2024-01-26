@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 
 class RegisterUsers : AppCompatActivity() {
     private lateinit var usernameInp: EditText
@@ -24,6 +25,8 @@ class RegisterUsers : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_users)
+        val actionBar = supportActionBar
+        actionBar?.hide()
 
 
         //Initialization of components
