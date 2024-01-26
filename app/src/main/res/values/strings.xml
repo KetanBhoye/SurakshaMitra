@@ -17,4 +17,5 @@
     <string name="confirm_password">Confirm password</string>
     <string name="register">Register</string>
     <string name="already_have_account">Already have account?</string>
+    <string name="hello">Hello</string>
 </resources>

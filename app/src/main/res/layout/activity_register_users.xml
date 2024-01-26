@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/lightblue"
     android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/heptaslab"
-        android:text="Hello"
+        android:textColor="@color/black"
+        android:text="@string/hello"
         android:textSize="15sp"
         app:layout_constraintBottom_toTopOf="@+id/username_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +27,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/hepta"
+        android:fontFamily="@font/heptaregular"
+        android:textColor="@color/black"
         android:text="Team"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -80,8 +83,9 @@
         app:layout_constraintVertical_bias="0.026" />
 
     <Spinner
+        android:id="@+id/agency_type"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="50dp"
         android:background="@drawable/textround"
         android:paddingLeft="10sp"
         android:prompt="@string/agency_type"
@@ -96,7 +100,6 @@
         android:id="@+id/address_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="324dp"
         android:background="@drawable/textround"
         android:hint="@string/address"
         android:inputType="text"
@@ -105,8 +108,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/_dynamic"
-        app:layout_constraintVertical_bias="0.28" />
+        app:layout_constraintTop_toBottomOf="@+id/agency_type"
+        app:layout_constraintVertical_bias="0.038" />
 
     <EditText
         android:id="@+id/phone_number_edit_text"
@@ -173,8 +176,13 @@
     <Button
         android:id="@+id/register_button"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="wrap_content"
         android:text="@string/register"
+        android:background="@drawable/button_background"
+        app:backgroundTint="@color/lightyellow"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/hepta"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -186,9 +194,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/already_have_account"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintHorizontal_bias="0.956"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_button"
         app:layout_constraintVertical_bias="1.0" />
