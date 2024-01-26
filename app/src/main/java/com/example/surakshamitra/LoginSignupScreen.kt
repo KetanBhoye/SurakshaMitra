@@ -23,6 +23,12 @@ class LoginSignupScreen : AppCompatActivity() {
             startActivity(intent)
         }
 
+        loginUser.setOnClickListener {
+
+            intent = Intent(this, LoginScreen::class.java)
+            startActivity(intent)
+        }
+
 
 
 
