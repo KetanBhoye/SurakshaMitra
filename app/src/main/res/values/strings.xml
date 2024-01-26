@@ -7,14 +7,14 @@
     <string name="login">Login</string>
     <string name="rightsMainLabel">All Right Reserved @2023</string>
     <string name="hello_team">Hello Team</string>
-    <string name="username">UserName</string>
+    <string name="Username">UserName</string>
     <string name="agency_name">Agency Name</string>
     <string name="agency_type">Agency Type</string>
     <string name="address">Address</string>
     <string name="phone_no">Phone No.</string>
     <string name="total_members">Total Members</string>
-    <string name="password">password</string>
-    <string name="confirm_password">confirm password</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm password</string>
     <string name="register">Register</string>
     <string name="already_have_account">Already have account?</string>
 </resources>
