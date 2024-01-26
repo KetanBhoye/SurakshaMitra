@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background"
     tools:context=".LoginSignupScreen">
@@ -52,7 +53,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/create_login"
         android:textColor="@color/black"
-
+        android:background="@drawable/button_background"
         app:backgroundTint="@color/skyblue"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/loginBtn"
@@ -66,8 +67,8 @@
         android:layout_marginBottom="56dp"
         android:text="@string/login"
         android:textColor="@color/black"
-
         android:textSize="20sp"
+        android:background="@drawable/button_background"
         app:backgroundTint="@color/lightyellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
