@@ -19,9 +19,7 @@
         <activity
             android:name=".RegisterUsers"
             android:exported="false" />
-        <activity
-            android:name=".activity_welcome_screen"
-            android:exported="false" />
+
         <activity
             android:name=".LoginSignupScreen"
             android:exported="false" />

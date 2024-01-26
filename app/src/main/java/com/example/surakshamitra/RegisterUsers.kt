@@ -1,7 +1,11 @@
 package com.example.surakshamitra
 
+import android.content.Intent
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Email
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,41 +14,57 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.ActionBar
+import com.example.surakshamitra.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.example.surakshamitra.data.UserRegistrationData
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class RegisterUsers : AppCompatActivity() {
     private lateinit var usernameInp: EditText
-    private  lateinit var agencyNameInp: EditText
-    private lateinit var  agencyTypeInp: Spinner
-    private lateinit var  agencyAddressInp: EditText
-    private lateinit var  agencyPhoneNoInp: EditText
-    private lateinit var  agencyTotalMembersInp: EditText
+    private lateinit var agencyNameInp: EditText
+    private lateinit var agencyTypeInp: Spinner
+    private lateinit var agencyAddressInp: EditText
+    private lateinit var agencyPhoneNoInp: EditText
+    private lateinit var agencyTotalMembersInp: EditText
     private lateinit var agencypassword: EditText
     private lateinit var agencycnfpassword: EditText
-    private lateinit var agencyRegisterBtn : Button
+    private lateinit var agencyRegisterBtn: Button
+    private lateinit var registrationfromExitBtn: Button
+    private lateinit var selectedAgencyType: String
+    private lateinit var agencyEmail: EditText
+
+    private lateinit var userRegistrationData: UserRegistrationData
+
+    // for authentication
+    private lateinit var mAuth: FirebaseAuth
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_users)
-        val actionBar = supportActionBar
-        actionBar?.hide()
 
-
-        //Initialization of components
-
+        // Initialization of components
         usernameInp = findViewById(R.id.username_edit_text)
         agencyNameInp = findViewById(R.id.agency_name_edit_text)
         agencyTypeInp = findViewById(R.id.agency_type)
-        agencyAddressInp =findViewById(R.id.address_edit_text)
+        agencyAddressInp = findViewById(R.id.address_edit_text)
         agencyPhoneNoInp = findViewById(R.id.phone_number_edit_text)
         agencyTotalMembersInp = findViewById(R.id.total_members_edit_text)
         agencypassword = findViewById(R.id.password_edit_text)
         agencycnfpassword = findViewById(R.id.confirm_password_edit_text)
         agencyRegisterBtn = findViewById(R.id.register_button)
+        registrationfromExitBtn = findViewById(R.id.exitbutton)
+        agencyEmail = findViewById(R.id.email_id)
 
+        // for exit
+        registrationfromExitBtn.setOnClickListener {
+            finish()
+        }
 
-
-        //for dropdownlist
-
+        // for dropdown list
         val agencyTypes = arrayOf(
             "National Disaster Response Force (NDRF)",
             "State Police Departments",
@@ -63,9 +83,9 @@ class RegisterUsers : AppCompatActivity() {
             "State Health Departments"
             // Add more agencies as needed
         )
-        // Add your agency types here
 
-         agencyTypeInp = findViewById(R.id.agency_type)
+        // Add your agency types here
+        agencyTypeInp = findViewById(R.id.agency_type)
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, agencyTypes)
@@ -79,12 +99,9 @@ class RegisterUsers : AppCompatActivity() {
         // Set up the OnItemSelectedListener to handle the selected agency type
         agencyTypeInp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedAgencyType = agencyTypes[position]
+                selectedAgencyType = agencyTypes[position]
                 val agencyTypeSpinner: Spinner = findViewById(R.id.agency_type)
                 agencyTypeSpinner.prompt = "Selected Agency Type: $selectedAgencyType"
-
-                Toast.makeText(applicationContext, "Selected Agency Type: $selectedAgencyType", Toast.LENGTH_LONG).show()
-
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -92,21 +109,74 @@ class RegisterUsers : AppCompatActivity() {
             }
         }
 
+        // Create user in firebase and push values.
+        agencyRegisterBtn.setOnClickListener {
+             userRegistrationData = UserRegistrationData(
+                username = usernameInp.text.toString(),
+                agencyName = agencyNameInp.text.toString(),
+                agencyType = selectedAgencyType,
+                address = agencyAddressInp.text.toString(),
+                phoneNumber = agencyPhoneNoInp.text.toString(),
+                emailAddress = agencyEmail.text.toString(),
+                totalMembers = agencyTotalMembersInp.text.toString(),
+                password = agencypassword.text.toString(),
+            )
+            val email = agencyEmail.text.toString()  // Corrected line
+            val paswd = agencycnfpassword.text.toString()
 
+            signup(email, paswd)
 
-
-
-
+        }
     }
-}
 
-data class UserRegistraionData(
-    val username: String,
-    val agencyName: String,
-    val agencyType: String,
-    val address: String,
-    val phoneNumber: String,
-    val totalMembers: Int,
-    val password: String,
-    val confirmPassword: String
-)
+    private fun createUser(userRegistrationData: UserRegistrationData) {
+        if (agencypassword.text.toString() == agencycnfpassword.text.toString()) {
+            val database = FirebaseDatabase.getInstance().reference
+            val usersReference = database.child("Agencies")
+
+            usersReference.child(userRegistrationData.username).setValue(userRegistrationData.toMap())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Data saved successfully
+                        Toast.makeText(applicationContext, "Registration Successful", Toast.LENGTH_SHORT).show()
+                        // You may want to navigate to another activity or perform other actions here
+                    } else {
+                        // Failed to save data
+                        Toast.makeText(applicationContext, "Registration Failed", Toast.LENGTH_SHORT).show()
+                    }
+
+
+
+                }
+        } else {
+            agencypassword.text.clear()
+            agencycnfpassword.text.clear()
+            Toast.makeText(applicationContext, "Check the password", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun signup(email: String, password: String) {
+        mAuth = Firebase.auth
+        mAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show()
+                    createUser(userRegistrationData)
+                    intent = Intent(applicationContext, LoginScreen::class.java)
+                    startActivity(intent)
+
+                } else {
+                    if (task.exception is FirebaseAuthUserCollisionException) {
+                        // Email already exists, show a toast
+                        Toast.makeText(this, "Email is already registered", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Other registration failure
+                        Toast.makeText(this, "User Creation failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+    }
+
+
+}
