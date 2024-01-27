@@ -13,6 +13,11 @@
         android:theme="@style/Theme.SurakshaMitra"
         tools:targetApi="31">
         <activity
+            android:name=".DashComposeTest"
+            android:exported="false"
+            android:label="@string/title_activity_dash_compose_test"
+            android:theme="@style/Theme.SurakshaMitra" />
+        <activity
             android:name=".DashBoard"
             android:exported="false" />
         <activity

@@ -69,20 +69,12 @@ class RegisterUsers : AppCompatActivity() {
             "National Disaster Response Force (NDRF)",
             "State Police Departments",
             "Fire Services",
+            "Indian Search and Rescue",
             "Emergency Medical Services (EMS)",
-            "Indian Coast Guard",
-            "National Security Guard (NSG)",
-            "State Disaster Management Authorities (SDMA)",
-            "Central Reserve Police Force (CRPF)",
-            "Indian Red Cross Society",
-            "Civil Defence",
-            "State Emergency Response Centers (SERC)",
-            "Railway Protection Force (RPF)",
-            "National Institute of Disaster Management (NIDM)",
-            "Disaster Relief Organizations (NGOs)",
-            "State Health Departments"
-            // Add more agencies as needed
+            "Indian Coast Guard"
         )
+
+
 
         // Add your agency types here
         agencyTypeInp = findViewById(R.id.agency_type)
@@ -176,6 +168,7 @@ class RegisterUsers : AppCompatActivity() {
                     }
                 }
             }
+
     }
 
 
