@@ -12,6 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SurakshaMitra"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAijV3L2HZxiDr9AyEj0XqQFxgOmlohiXo" />
+
+        <activity
+            android:name=".MapNearbyAgencies"
+            android:exported="false" />
         <activity
             android:name=".DashComposeTest"
             android:exported="false"
@@ -23,11 +31,7 @@
         <activity
             android:name=".AgencyInfo"
             android:exported="false" />
-        <activity
-            android:name=".agency_info"
-            android:exported="false"
-            android:label="@string/title_activity_agency_info"
-            android:theme="@style/Theme.SurakshaMitra" />
+
         <activity
             android:name=".DashBoard"
             android:exported="false" />

@@ -47,7 +47,7 @@ class RegisterUsers : AppCompatActivity() {
         setContentView(R.layout.activity_register_users)
 
         // Initialization of components
-        usernameInp = findViewById(R.id.username_edit_text)
+//        usernameInp = findViewById(R.id.username_edit_text)
         agencyNameInp = findViewById(R.id.agency_name_edit_text)
         agencyTypeInp = findViewById(R.id.agency_type)
         agencyAddressInp = findViewById(R.id.address_edit_text)
