@@ -23,7 +23,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 
 class RegisterUsers : AppCompatActivity() {
-    private lateinit var usernameInp: EditText
+    private lateinit var usernameInp: String
     private lateinit var agencyNameInp: EditText
     private lateinit var agencyTypeInp: Spinner
     private lateinit var agencyAddressInp: EditText
@@ -47,7 +47,7 @@ class RegisterUsers : AppCompatActivity() {
         setContentView(R.layout.activity_register_users)
 
         // Initialization of components
-//        usernameInp = findViewById(R.id.username_edit_text)
+
         agencyNameInp = findViewById(R.id.agency_name_edit_text)
         agencyTypeInp = findViewById(R.id.agency_type)
         agencyAddressInp = findViewById(R.id.address_edit_text)
@@ -59,7 +59,7 @@ class RegisterUsers : AppCompatActivity() {
         registrationfromExitBtn = findViewById(R.id.exitbutton)
         agencyEmail = findViewById(R.id.email_id)
 
-        // for exit
+                // for exit
         registrationfromExitBtn.setOnClickListener {
             finish()
         }
@@ -101,10 +101,16 @@ class RegisterUsers : AppCompatActivity() {
             }
         }
 
+
+        //create username for user
+        val index = agencypassword.text.indexOf('@')
+        usernameInp = agencyEmail.text.substring(0,index)
+
+
         // Create user in firebase and push values.
         agencyRegisterBtn.setOnClickListener {
              userRegistrationData = UserRegistrationData(
-                username = usernameInp.text.toString(),
+                username = usernameInp,
                 agencyName = agencyNameInp.text.toString(),
                 agencyType = selectedAgencyType,
                 address = agencyAddressInp.text.toString(),
