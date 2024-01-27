@@ -3,17 +3,30 @@ package com.example.surakshamitra
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
+import android.telephony.CellSignalStrength
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 class AgencyInfo : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_agency_info)
+
+
+        //Initialization
+
+
     }
+
+
+
+
+
 }
 class CustomEditTextView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -33,4 +46,7 @@ class CustomEditTextView @JvmOverloads constructor(
         editText.hint = hintText
         textView.text = hintText
     }
+
+
+
 }

@@ -3,6 +3,7 @@ package com.example.surakshamitra
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.compose.runtime.produceState
@@ -20,15 +21,21 @@ class DashBoard : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
 
     private lateinit var tempprofile: ImageView
+
+    private lateinit var email: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
+
+        intent = Intent(this,AboutAgency::class.java)
+        startActivity(intent)
+
 //        intent = Intent(this,AgencyInfo::class.java)
 //        startActivity(intent)
 //        intent = Intent(this,AboutAgency::class.java)
 //        startActivity(intent)
-        intent = Intent(this,MapNearbyAgencies::class.java)
-        startActivity(intent)
+//        intent = Intent(this,MapNearbyAgencies::class.java)
+//        startActivity(intent)
 
         logoutBtn = findViewById(R.id.logoutbtn)
         tempprofile = findViewById(R.id.profileimgtest)
@@ -44,25 +51,8 @@ class DashBoard : AppCompatActivity() {
 
         )
 
-        val database = FirebaseDatabase.getInstance().reference
-        val userReference = database.child("Agencies").child("ketan")
 
-        userReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // Data retrieved successfully
-                val userData = snapshot.getValue(UserRegistrationData::class.java)
-
-                if (userData != null) {
-                    agencyType[userData.agencyType]?.let { tempprofile.setImageResource(it) }
-                }
-
-                // Use the userData object to populate your UI elements
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Handle error
-            }
-        })
+        //split email to create username.
 
         logoutBtn.setOnClickListener {
             mAuth.signOut()
