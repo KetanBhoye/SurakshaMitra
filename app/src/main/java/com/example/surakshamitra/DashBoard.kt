@@ -16,7 +16,9 @@ class DashBoard : AppCompatActivity() {
         setContentView(R.layout.activity_dash_board)
 //        intent = Intent(this,AgencyInfo::class.java)
 //        startActivity(intent)
-        intent = Intent(this,AboutAgency::class.java)
+//        intent = Intent(this,AboutAgency::class.java)
+//        startActivity(intent)
+        intent = Intent(this,MapNearbyAgencies::class.java)
         startActivity(intent)
 
         logoutBtn = findViewById(R.id.logoutbtn)
