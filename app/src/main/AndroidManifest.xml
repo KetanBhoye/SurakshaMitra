@@ -18,6 +18,17 @@
             android:label="@string/title_activity_dash_compose_test"
             android:theme="@style/Theme.SurakshaMitra" />
         <activity
+            android:name=".AboutAgency"
+            android:exported="false" />
+        <activity
+            android:name=".AgencyInfo"
+            android:exported="false" />
+        <activity
+            android:name=".agency_info"
+            android:exported="false"
+            android:label="@string/title_activity_agency_info"
+            android:theme="@style/Theme.SurakshaMitra" />
+        <activity
             android:name=".DashBoard"
             android:exported="false" />
         <activity

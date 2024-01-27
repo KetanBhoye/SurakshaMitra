@@ -23,6 +23,10 @@ class DashBoard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
+//        intent = Intent(this,AgencyInfo::class.java)
+//        startActivity(intent)
+        intent = Intent(this,AboutAgency::class.java)
+        startActivity(intent)
 
         logoutBtn = findViewById(R.id.logoutbtn)
         tempprofile = findViewById(R.id.profileimgtest)
