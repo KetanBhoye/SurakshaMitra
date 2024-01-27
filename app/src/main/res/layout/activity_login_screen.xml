@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/loginanim"
         android:layout_width="match_parent"
@@ -75,7 +76,7 @@
             app:layout_constraintVertical_bias="0.13" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/loginUserName"
             android:layout_width="320sp"
             android:layout_height="50sp"
             android:background="@drawable/textround"
@@ -89,17 +90,17 @@
             app:layout_constraintVertical_bias="0.303" />
 
         <EditText
-            android:id="@+id/editText2"
-            android:layout_width="320sp"
-            android:layout_height="50sp"
+            android:id="@+id/loginPassword"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
             android:background="@drawable/textround"
-            android:paddingLeft="15sp"
-            android:hint="PassWord"
+            android:paddingLeft="15dp"
+            android:hint="Password"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.54"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText"
+            app:layout_constraintTop_toBottomOf="@+id/loginUserName"
             app:layout_constraintVertical_bias="0.075" />
 
         <CheckBox
@@ -122,12 +123,13 @@
             android:fontFamily="@font/heptaregular"
             android:text="Remember Me"
             android:textColor="@color/black"
+
             android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/checkBox"
-            app:layout_constraintTop_toBottomOf="@+id/editText2"
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword"
             app:layout_constraintVertical_bias="0.961" />
 
         <TextView
@@ -136,9 +138,8 @@
             android:layout_marginBottom="12dp"
             android:fontFamily="@font/heptaregular"
             android:text="Forget Password ?"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.637"
             app:layout_constraintStart_toEndOf="@+id/textView4"
@@ -146,9 +147,9 @@
             app:layout_constraintVertical_bias="0.995" />
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="320sp"
-            android:layout_height="50sp"
+            android:id="@+id/loginButton2"
+            android:layout_width="320dp"
+            android:layout_height="50dp"
             android:background="@drawable/button_background"
             android:textAllCaps="false"
             android:fontFamily="@font/hepta"
@@ -159,22 +160,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.549"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText2"
-            app:layout_constraintVertical_bias="0.527" />
+            app:layout_constraintTop_toBottomOf="@+id/loginPassword"
+            app:layout_constraintVertical_bias="0.48" />
 
         <TextView
+            android:id="@+id/donthaveac"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:text="Don't have an account?"
+            android:text="@string/don_t_have_an_account"
+            android:textSize="20sp"
             android:textColor="@color/black"
             android:fontFamily="@font/heptaregular"
-            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button"
+            app:layout_constraintTop_toBottomOf="@+id/loginButton2"
             app:layout_constraintVertical_bias="0.058" />
 
 
