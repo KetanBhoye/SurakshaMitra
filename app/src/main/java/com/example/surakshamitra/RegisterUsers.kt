@@ -1,7 +1,10 @@
 package com.example.surakshamitra
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
@@ -51,6 +54,14 @@ class RegisterUsers : AppCompatActivity() {
             createUserAndSignUp()
         }
     }
+    private fun saveUserDataLocally() {
+        val userDataJson = userRegistrationData.toJson()
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userData", userDataJson)
+        editor.apply()
+    }
+
 
     private fun initializeViews() {
         agencyNameInp = findViewById(R.id.agency_name_edit_text)
@@ -93,23 +104,84 @@ class RegisterUsers : AppCompatActivity() {
     }
 
     private fun createUserAndSignUp() {
-        val index = agencyEmail.text.indexOf('@')
-        usernameInp = agencyEmail.text.substring(0, index)
+        val email = agencyEmail.text.toString()
+        val password = agencypassword.text.toString()
+        val confirmPassword = agencycnfpassword.text.toString()
+        val phoneNumber = agencyPhoneNoInp.text.toString()
+
+        if (email.isBlank() || password.isBlank() || confirmPassword.isBlank() ||
+            phoneNumber.isBlank() || !isValidPhoneNumber(phoneNumber) || !isValidEmail(email)
+        ) {
+            showAlertDialog("Validation Error", getValidationErrorMessage(email, password, confirmPassword, phoneNumber))
+            return
+        }
+
+        if (password != confirmPassword) {
+            showAlertDialog("Validation Error", "Passwords do not match")
+            return
+        }
+
+        if (password.contains(" ")) {
+            showAlertDialog("Validation Error", "Password should not contain spaces")
+            return
+        }
+
+        val index = email.indexOf('@')
+        usernameInp = email.substring(0, index)
         userRegistrationData = UserRegistrationData(
             username = usernameInp,
             agencyName = agencyNameInp.text.toString(),
             agencyType = selectedAgencyType,
             address = agencyAddressInp.text.toString(),
-            phoneNumber = agencyPhoneNoInp.text.toString(),
-            emailAddress = agencyEmail.text.toString(),
+            phoneNumber = phoneNumber,
+            emailAddress = email,
             totalMembers = agencyTotalMembersInp.text.toString(),
-            password = agencypassword.text.toString()
+            password = password
         )
 
-        val email = agencyEmail.text.toString()
-        val password = agencycnfpassword.text.toString()
-
         signUpUser(email, password)
+    }
+
+    private fun getValidationErrorMessage(email: String, password: String, confirmPassword: String, phoneNumber: String): String {
+        val errorMessage = StringBuilder("Please fill in the following fields with valid information:\n")
+
+        if (email.isBlank() || !isValidEmail(email)) {
+            errorMessage.append("- Email\n")
+        }
+        if (password.isBlank()) {
+            errorMessage.append("- Password\n")
+        }
+        if (confirmPassword.isBlank()) {
+            errorMessage.append("- Confirm Password\n")
+        }
+        if (password != confirmPassword) {
+            errorMessage.append("- Passwords do not match\n")
+        }
+        if (phoneNumber.isBlank() || !isValidPhoneNumber(phoneNumber)) {
+            errorMessage.append("- Phone Number\n")
+        }
+
+        return errorMessage.toString()
+    }
+
+    private fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        // Simple validation for demonstration purposes
+        return phoneNumber.matches(Regex("\\d{10}"))
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        // Simple validation for demonstration purposes
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun showAlertDialog(title: String, message: String) {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle(title)
+        alertDialogBuilder.setMessage(message)
+        alertDialogBuilder.setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     private fun signUpUser(email: String, password: String) {
@@ -119,6 +191,7 @@ class RegisterUsers : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "User Created", Toast.LENGTH_SHORT).show()
                     saveUserDataToDatabase()
+                    saveUserDataLocally()  // Save data locally
                     navigateToLoginScreen()
                 } else {
                     handleRegistrationError(task.exception)

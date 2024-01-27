@@ -1,4 +1,6 @@
-package com.example.surakshamitra.data;
+package com.example.surakshamitra.data
+
+import com.google.gson.Gson
 
 data class UserRegistrationData(
     val username: String = "",
@@ -8,8 +10,12 @@ data class UserRegistrationData(
     val phoneNumber: String = "",
     val emailAddress: String = "",
     val totalMembers: String = "",
-    val password: String = "",
+    val password: String = ""
 ) {
+    fun toJson(): String {
+        return Gson().toJson(this)  // No semicolon needed inside a function body
+    }
+
     fun toMap(): Map<String, Any?> {
         return mapOf(
             "username" to username,
@@ -19,7 +25,7 @@ data class UserRegistrationData(
             "phoneNumber" to phoneNumber,
             "emailAddress" to emailAddress,
             "totalMembers" to totalMembers,
-            "password" to password,
+            "password" to password
         )
     }
 }
