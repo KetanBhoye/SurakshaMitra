@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/lightblue"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
@@ -15,12 +15,10 @@
         android:text="@string/hello"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/username_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.276"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.18" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -28,8 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/heptaregular"
-        android:textColor="@color/black"
         android:text="Team"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -65,37 +63,19 @@
         app:layout_constraintVertical_bias="0.035" />
 
     <EditText
-        android:id="@+id/username_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/textround"
-        android:hint="Username"
-
-        android:inputType="text"
-        android:paddingLeft="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
         android:id="@+id/agency_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
+        android:layout_marginBottom="544dp"
         android:background="@drawable/textround"
         android:hint="@string/agency_name"
-        android:inputType="text"
 
+        android:inputType="text"
         android:paddingLeft="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_edit_text"
-        app:layout_constraintVertical_bias="0.02" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
         android:id="@+id/agency_type"
@@ -145,7 +125,7 @@
         android:id="@+id/total_members_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="204dp"
+        android:layout_marginBottom="216dp"
         android:background="@drawable/textround"
         android:hint="@string/total_members"
         android:paddingLeft="10sp"
@@ -159,7 +139,7 @@
         android:id="@+id/password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="144dp"
+        android:layout_marginBottom="148dp"
         android:background="@drawable/textround"
         android:hint="@string/password"
         android:inputType="textPassword"
