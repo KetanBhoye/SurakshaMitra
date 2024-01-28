@@ -38,4 +38,7 @@
     <string name="profile">Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="active_teams_20">Active Teams: 20</string>
+    <string name="total_teams_40">Total Teams: 40</string>
+    <string name="total_request_come_3">Total Request Come: 3</string>
 </resources>
