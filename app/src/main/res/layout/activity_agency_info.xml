@@ -9,17 +9,18 @@
 
     <ImageView
         android:id="@+id/agencyinfo_profilImg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="114dp"
+        android:layout_height="111dp"
         android:src="@drawable/user_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.087" />
 
     <ImageView
+        android:id="@+id/infobackBtn"
         android:layout_width="30sp"
         android:layout_height="30sp"
         android:src="@drawable/back_arrow"
@@ -41,116 +42,122 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.034" />
 
-    <EditText
-        android:id="@+id/agencyinfo_username"
-        android:layout_width="350sp"
-        android:layout_height="50sp"
-        android:paddingLeft="20dp"
-        android:hint="@string/Username"
-        android:background="@drawable/textround"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.292" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="350sp"
-        android:layout_height="50sp"
-        android:paddingLeft="20dp"
-        android:hint="Mobile No"
-        android:background="@drawable/textround"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText4"
-        app:layout_constraintVertical_bias="0.072" />
-
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="350sp"
-        android:layout_height="50sp"
-        android:paddingLeft="20dp"
-        android:hint="DOB"
-        android:background="@drawable/textround"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/agencyinfoEmail"
-        app:layout_constraintVertical_bias="0.033" />
-
-    <EditText
+    <TextView
         android:id="@+id/agencyinfoEmail"
         android:layout_width="350sp"
         android:layout_height="50sp"
-        android:paddingLeft="20dp"
-        android:hint="Email"
         android:background="@drawable/textround"
+        android:hint="Email"
+        android:paddingLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/agencyinfo_username"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.171" />
 
-    <EditText
-        android:id="@+id/editText5"
+    <TextView
+        android:id="@+id/infoagencyName"
         android:layout_width="350sp"
         android:layout_height="50sp"
-        android:paddingLeft="20dp"
-        android:hint="State"
         android:background="@drawable/textround"
+        android:hint="@string/agency_name"
+        android:paddingLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.442"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6"
-        app:layout_constraintVertical_bias="0.128" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.355" />
 
-    <EditText
-        android:id="@+id/editText6"
+    <TextView
+        android:id="@+id/infoagencyTotalmembers"
         android:layout_width="350sp"
         android:layout_height="50sp"
-        android:paddingLeft="20dp"
-        android:hint="Female"
         android:layout_marginBottom="96dp"
         android:background="@drawable/textround"
+        android:hint="Total Members"
+        android:paddingLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintHorizontal_bias="0.475"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.177" />
+        app:layout_constraintTop_toBottomOf="@+id/infoagencyContactNO"
+        app:layout_constraintVertical_bias="0.204" />
+
+    <TextView
+        android:id="@+id/agencyinfo_username"
+        android:layout_width="350sp"
+        android:layout_height="50sp"
+        android:background="@drawable/textround"
+        android:hint="@string/Username"
+        android:paddingLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.259" />
+
+    <TextView
+        android:id="@+id/infoagencyType"
+        android:layout_width="350sp"
+        android:layout_height="50sp"
+        android:background="@drawable/textround"
+        android:hint="Agency Type"
+        android:paddingLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.442"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agencyinfoEmail"
+        app:layout_constraintVertical_bias="0.048" />
+
+    <EditText
+        android:id="@+id/infoagencyAdd"
+        android:layout_width="350sp"
+        android:layout_height="50sp"
+        android:background="@drawable/textround"
+        android:hint="Address"
+        android:paddingLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.459"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoagencyTotalmembers"
+        app:layout_constraintVertical_bias="0.153" />
+
+    <TextView
+        android:id="@+id/infoagencyContactNO"
+        android:layout_width="350sp"
+        android:layout_height="50sp"
+        android:background="@drawable/textround"
+        android:hint="Mobile No"
+        android:paddingLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoagencyType"
+        app:layout_constraintVertical_bias="0.085" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="320sp"
         android:layout_height="50sp"
-        android:layout_marginBottom="44dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/hepta"
+        android:text="Edit Profile"
         android:textAllCaps="false"
         android:textSize="20dp"
-        android:fontFamily="@font/hepta"
-        android:text="Save Changes"
         app:backgroundTint="@color/lightyellow"
-        android:background="@drawable/button_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/infoagencyAdd"
+        app:layout_constraintVertical_bias="0.326" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="All Rights Reserved @2024"
-        android:textSize="10dp"
-        android:fontFamily="@font/heptaregular"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

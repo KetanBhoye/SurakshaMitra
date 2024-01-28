@@ -32,4 +32,10 @@
         vitae volutpat diam dignissim.
     </string>
     <string name="welcome_back">Welcome Back !!</string>
+    <string name="title_activity_dash_board_composable">DashBoardComposable</string>
+    <string name="dash">Dashboard</string>
+    <string name="panic">Alert</string>
+    <string name="profile">Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
