@@ -84,6 +84,7 @@ dependencies {
     implementation ("androidx.compose.material3:material3:1.1.2")
     implementation ("androidx.compose.ui:ui:1.6.0")
     implementation ("androidx.compose.material3:material3:1.1.2")
+    implementation ("com.google.android.gms:play-services-location:18.0.0")
 
 
 
