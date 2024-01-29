@@ -21,10 +21,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.android.gms.maps.model.Marker
+
 class PanicFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val markersMap: MutableMap<String, Marker?> = mutableMapOf()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +49,12 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
             zoomToCurrentLocation()
         }
 
+        // Load agency data and add markers to the map
+        loadAgencyData()
+
+        // Listen for live updates from the Firebase Realtime Database
+        listenForUpdates()
+
         return view
     }
 
@@ -59,9 +69,6 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
         ) {
             mMap.isMyLocationEnabled = true
             mMap.uiSettings.isMyLocationButtonEnabled = false
-
-            // Load agency data and add markers to the map
-            loadAgencyData()
         } else {
             // Request location permission
             ActivityCompat.requestPermissions(
@@ -89,14 +96,7 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
         agenciesRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (agencySnapshot in snapshot.children) {
-                    val latitude = agencySnapshot.child("latitude").getValue(String::class.java)
-                    val longitude = agencySnapshot.child("longitude").getValue(String::class.java)
-                    val agencyName = agencySnapshot.child("agencyName").getValue(String::class.java)
-
-                    if (latitude != null && longitude != null && agencyName != null) {
-                        val agencyLatLng = LatLng(latitude.toDouble(), longitude.toDouble())
-                        mMap.addMarker(MarkerOptions().position(agencyLatLng).title(agencyName))
-                    }
+                    updateMarker(agencySnapshot)
                 }
             }
 
@@ -104,6 +104,42 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
                 // Handle error
             }
         })
+    }
+
+    private fun listenForUpdates() {
+        val database = FirebaseDatabase.getInstance()
+        val agenciesRef = database.getReference("Agencies")
+
+        agenciesRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (agencySnapshot in snapshot.children) {
+                    updateMarker(agencySnapshot)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        })
+    }
+
+    private fun updateMarker(agencySnapshot: DataSnapshot) {
+        val latitude = agencySnapshot.child("latitude").getValue(String::class.java)
+        val longitude = agencySnapshot.child("longitude").getValue(String::class.java)
+        val agencyName = agencySnapshot.child("agencyName").getValue(String::class.java)
+        val agencyId = agencySnapshot.key
+
+        if (latitude != null && longitude != null && agencyName != null && agencyId != null) {
+            val agencyLatLng = LatLng(latitude.toDouble(), longitude.toDouble())
+            if (markersMap.containsKey(agencyId)) {
+                // If marker already exists, update its position
+                markersMap[agencyId]?.position = agencyLatLng
+            } else {
+                // If marker doesn't exist, create a new one
+                val marker = mMap.addMarker(MarkerOptions().position(agencyLatLng).title(agencyName))
+                markersMap[agencyId] = marker
+            }
+        }
     }
 
     companion object {
