@@ -39,8 +39,8 @@ class RegisterUsers : AppCompatActivity() {
     private lateinit var agencyEmail: EditText
     private lateinit var userRegistrationData: UserRegistrationData
     private lateinit var mAuth: FirebaseAuth
-    private var userLatitude: String = ""
-    private var userLongitude: String = ""
+    private var userLatitude: String = "0.00"
+    private var userLongitude: String = "0.00"
     private var userStatus: Boolean = false
 
     // For location
@@ -117,10 +117,10 @@ class RegisterUsers : AppCompatActivity() {
         if (checkLocationPermission()) {
             // Permissions are already granted, get the current location
             getCurrentLocation(object : LocationCallback {
-                override fun onLocationReceived(latitude: String, longitude: String) {
+                override fun onLocationReceived(latitude: Double, longitude: Double) {
                     // Location received, proceed with user creation and sign-up
-                    userLatitude = latitude
-                    userLongitude = longitude
+                    userLatitude = latitude.toString()
+                    userLongitude = longitude.toString()
                     performUserSignUp()
                 }
 
@@ -171,8 +171,8 @@ class RegisterUsers : AppCompatActivity() {
             .addOnSuccessListener { location: Location? ->
                 // Got last known location. In some situations, this can be null.
                 if (location != null) {
-                    val latitude = location.latitude.toString()
-                    val longitude = location.longitude.toString()
+                    val latitude = location.latitude
+                    val longitude = location.longitude
                     callback.onLocationReceived(latitude, longitude)
                 } else {
                     callback.onLocationError("Last known location is null")
@@ -328,7 +328,7 @@ class RegisterUsers : AppCompatActivity() {
     }
 
     private interface LocationCallback {
-        fun onLocationReceived(latitude: String, longitude: String)
+        fun onLocationReceived(latitude: Double, longitude: Double)
         fun onLocationError(error: String)
     }
 

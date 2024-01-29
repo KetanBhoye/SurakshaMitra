@@ -17,7 +17,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 class PanicFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -31,7 +34,8 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
         val locateMeBtn: ImageView = view.findViewById(R.id.locateMeBtn)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -56,14 +60,8 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
             mMap.isMyLocationEnabled = true
             mMap.uiSettings.isMyLocationButtonEnabled = false
 
-            // Request location updates
-            fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    val currentLatLng = LatLng(it.latitude, it.longitude)
-                    mMap.addMarker(MarkerOptions().position(currentLatLng).title("Current Location"))
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
-                }
-            }
+            // Load agency data and add markers to the map
+            loadAgencyData()
         } else {
             // Request location permission
             ActivityCompat.requestPermissions(
@@ -82,6 +80,30 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
             }
         }
+    }
+
+    private fun loadAgencyData() {
+        val database = FirebaseDatabase.getInstance()
+        val agenciesRef = database.getReference("Agencies")
+
+        agenciesRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (agencySnapshot in snapshot.children) {
+                    val latitude = agencySnapshot.child("latitude").getValue(String::class.java)
+                    val longitude = agencySnapshot.child("longitude").getValue(String::class.java)
+                    val agencyName = agencySnapshot.child("agencyName").getValue(String::class.java)
+
+                    if (latitude != null && longitude != null && agencyName != null) {
+                        val agencyLatLng = LatLng(latitude.toDouble(), longitude.toDouble())
+                        mMap.addMarker(MarkerOptions().position(agencyLatLng).title(agencyName))
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        })
     }
 
     companion object {
