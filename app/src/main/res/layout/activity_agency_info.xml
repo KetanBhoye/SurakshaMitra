@@ -47,6 +47,8 @@
         android:id="@+id/agencyinfoEmail"
         android:layout_width="350sp"
         android:layout_height="50sp"
+        android:fontFamily="@font/heptaregular"
+        android:paddingTop="10dp"
         android:background="@drawable/textround"
         android:hint="Email"
         android:paddingLeft="20dp"
@@ -61,6 +63,9 @@
         android:id="@+id/infoagencyName"
         android:layout_width="350sp"
         android:layout_height="50sp"
+        android:paddingTop="10dp"
+        android:fontFamily="@font/heptaregular"
+
         android:background="@drawable/textround"
         android:hint="@string/agency_name"
         android:paddingLeft="20dp"
@@ -71,14 +76,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.355" />
 
-    <TextView
+    <EditText
         android:id="@+id/infoagencyTotalmembers"
         android:layout_width="350sp"
         android:layout_height="50sp"
+        android:fontFamily="@font/heptaregular"
         android:layout_marginBottom="96dp"
         android:background="@drawable/textround"
         android:hint="Total Members"
         android:paddingLeft="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.475"
@@ -90,6 +97,8 @@
         android:id="@+id/agencyinfo_username"
         android:layout_width="350sp"
         android:layout_height="50sp"
+        android:paddingTop="10dp"
+        android:fontFamily="@font/heptaregular"
         android:background="@drawable/textround"
         android:hint="@string/Username"
         android:paddingLeft="20dp"
@@ -104,6 +113,8 @@
         android:id="@+id/infoagencyType"
         android:layout_width="350sp"
         android:layout_height="50sp"
+        android:paddingTop="10dp"
+        android:fontFamily="@font/heptaregular"
         android:background="@drawable/textround"
         android:hint="Agency Type"
         android:paddingLeft="20dp"
@@ -114,11 +125,14 @@
         app:layout_constraintTop_toBottomOf="@+id/agencyinfoEmail"
         app:layout_constraintVertical_bias="0.048" />
 
-    <EditText
+    <TextView
         android:id="@+id/infoagencyAdd"
         android:layout_width="350sp"
         android:layout_height="50sp"
+        android:paddingTop="10dp"
+        android:fontFamily="@font/heptaregular"
         android:background="@drawable/textround"
+
         android:hint="Address"
         android:paddingLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -128,13 +142,15 @@
         app:layout_constraintTop_toBottomOf="@+id/infoagencyTotalmembers"
         app:layout_constraintVertical_bias="0.153" />
 
-    <TextView
+    <EditText
         android:id="@+id/infoagencyContactNO"
         android:layout_width="350sp"
         android:layout_height="50sp"
         android:background="@drawable/textround"
+        android:fontFamily="@font/heptaregular"
         android:hint="Mobile No"
         android:paddingLeft="20dp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.475"
