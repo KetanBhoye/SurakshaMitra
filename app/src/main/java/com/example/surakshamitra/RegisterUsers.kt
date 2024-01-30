@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.app.AlertDialog
 import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -22,6 +23,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.util.UUID
 
 class RegisterUsers : AppCompatActivity() {
 
@@ -42,6 +46,9 @@ class RegisterUsers : AppCompatActivity() {
     private var userLatitude: String = "0.00"
     private var userLongitude: String = "0.00"
     private var userStatus: Boolean = false
+    private lateinit var uploadButton: Button
+    private lateinit var storageRef: StorageReference
+    private val PICK_IMAGE_REQUEST = 1
 
     // For location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -52,6 +59,8 @@ class RegisterUsers : AppCompatActivity() {
 
         // For location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        storageRef = FirebaseStorage.getInstance().reference
+
         initializeViews()
         setupAgencyTypeSpinner()
 
@@ -62,7 +71,39 @@ class RegisterUsers : AppCompatActivity() {
         agencyRegisterBtn.setOnClickListener {
             createUserAndSignUp()
         }
+        uploadButton.setOnClickListener { chooseImage() }
     }
+    private fun chooseImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            val filePath = data.data!!
+            uploadImage(filePath)
+        }
+    }
+    private fun uploadImage(imageUri: Uri?) {
+        imageUri ?: return // Check if imageUri is null
+
+        val fileName = "${UUID.randomUUID()}.jpg"
+        val storageReference = FirebaseStorage.getInstance().reference.child("profile Images/$fileName")
+
+        storageReference.putFile(imageUri)
+            .addOnSuccessListener {
+                // Image upload successful
+                val imageUrl = storageReference.downloadUrl.toString()
+                Toast.makeText(applicationContext, imageUrl, Toast.LENGTH_SHORT).show()
+                // Handle the imageUrl as needed (e.g., display it or save it to a database)
+            }
+            .addOnFailureListener {
+                // Handle upload failures
+                // ...
+            }
+    }
+
 
     private fun saveUserDataLocally() {
         val userDataJson = userRegistrationData.toJson()
@@ -83,6 +124,7 @@ class RegisterUsers : AppCompatActivity() {
         agencyRegisterBtn = findViewById(R.id.register_button)
         registrationfromExitBtn = findViewById(R.id.exitbutton)
         agencyEmail = findViewById(R.id.email_id)
+        uploadButton = findViewById(R.id.uploadImgBtn)
     }
 
     private fun setupAgencyTypeSpinner() {

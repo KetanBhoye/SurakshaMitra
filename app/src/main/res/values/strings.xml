@@ -41,4 +41,5 @@
     <string name="active_teams_20">Active Teams: 20</string>
     <string name="total_teams_40">Total Teams: 40</string>
     <string name="total_request_come_3">Total Request Come: 3</string>
+    <string name="upload_authorized_id">Upload Authorized ID</string>
 </resources>
