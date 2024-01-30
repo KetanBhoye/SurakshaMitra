@@ -10,7 +10,10 @@ data class UserRegistrationData(
     val phoneNumber: String = "",
     val emailAddress: String = "",
     val totalMembers: String = "",
-    val password: String = ""
+    val password: String = "",
+    val activeStatus: Boolean = false,
+    val latitude: String ="0.00",
+    val longitude: String ="0.00",
 ) {
     fun toJson(): String {
         return Gson().toJson(this)  // No semicolon needed inside a function body
@@ -25,7 +28,10 @@ data class UserRegistrationData(
             "phoneNumber" to phoneNumber,
             "emailAddress" to emailAddress,
             "totalMembers" to totalMembers,
-            "password" to password
+            "password" to password,
+            "activeStaus" to activeStatus,
+            "latitude" to latitude,
+            "longitude" to longitude
         )
     }
 }

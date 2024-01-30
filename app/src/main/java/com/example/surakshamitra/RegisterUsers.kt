@@ -1,20 +1,24 @@
 package com.example.surakshamitra
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
+import android.location.Location
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import com.example.surakshamitra.data.UserRegistrationData
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.database.FirebaseDatabase
@@ -35,15 +39,20 @@ class RegisterUsers : AppCompatActivity() {
     private lateinit var agencyEmail: EditText
     private lateinit var userRegistrationData: UserRegistrationData
     private lateinit var mAuth: FirebaseAuth
+    private var userLatitude: String = "0.00"
+    private var userLongitude: String = "0.00"
+    private var userStatus: Boolean = false
 
-
+    // For location
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_users)
 
+        // For location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         initializeViews()
-
         setupAgencyTypeSpinner()
 
         registrationfromExitBtn.setOnClickListener {
@@ -54,6 +63,7 @@ class RegisterUsers : AppCompatActivity() {
             createUserAndSignUp()
         }
     }
+
     private fun saveUserDataLocally() {
         val userDataJson = userRegistrationData.toJson()
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -61,7 +71,6 @@ class RegisterUsers : AppCompatActivity() {
         editor.putString("userData", userDataJson)
         editor.apply()
     }
-
 
     private fun initializeViews() {
         agencyNameInp = findViewById(R.id.agency_name_edit_text)
@@ -90,7 +99,7 @@ class RegisterUsers : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         agencyTypeInp.adapter = adapter
 
-        agencyTypeInp.onItemSelectedListener = object : OnItemSelectedListener {
+        agencyTypeInp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedAgencyType = agencyTypes[position]
                 val agencyTypeSpinner: Spinner = findViewById(R.id.agency_type)
@@ -104,6 +113,74 @@ class RegisterUsers : AppCompatActivity() {
     }
 
     private fun createUserAndSignUp() {
+        // To get the user's location
+        if (checkLocationPermission()) {
+            // Permissions are already granted, get the current location
+            getCurrentLocation(object : LocationCallback {
+                override fun onLocationReceived(latitude: Double, longitude: Double) {
+                    // Location received, proceed with user creation and sign-up
+                    userLatitude = latitude.toString()
+                    userLongitude = longitude.toString()
+                    performUserSignUp()
+                }
+
+                override fun onLocationError(error: String) {
+                    // Handle location error if needed
+                    showAlertDialog("Location Error", "Failed to get location: $error")
+                }
+            })
+        } else {
+            // Request location permissions if not granted
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+    private fun checkLocationPermission(): Boolean {
+        return (ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun getCurrentLocation(callback: LocationCallback) {
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Request location permissions if not granted
+            callback.onLocationError("Location permissions not granted")
+            return
+        }
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                // Got last known location. In some situations, this can be null.
+                if (location != null) {
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+                    callback.onLocationReceived(latitude, longitude)
+                } else {
+                    callback.onLocationError("Last known location is null")
+                }
+            }
+    }
+
+    private fun performUserSignUp() {
         val email = agencyEmail.text.toString()
         val password = agencypassword.text.toString()
         val confirmPassword = agencycnfpassword.text.toString()
@@ -112,7 +189,10 @@ class RegisterUsers : AppCompatActivity() {
         if (email.isBlank() || password.isBlank() || confirmPassword.isBlank() ||
             phoneNumber.isBlank() || !isValidPhoneNumber(phoneNumber) || !isValidEmail(email)
         ) {
-            showAlertDialog("Validation Error", getValidationErrorMessage(email, password, confirmPassword, phoneNumber))
+            showAlertDialog(
+                "Validation Error",
+                getValidationErrorMessage(email, password, confirmPassword, phoneNumber)
+            )
             return
         }
 
@@ -136,13 +216,21 @@ class RegisterUsers : AppCompatActivity() {
             phoneNumber = phoneNumber,
             emailAddress = email,
             totalMembers = agencyTotalMembersInp.text.toString(),
-            password = password
+            password = password,
+            activeStatus = userStatus,
+            latitude = userLatitude,
+            longitude = userLongitude
         )
 
         signUpUser(email, password)
     }
 
-    private fun getValidationErrorMessage(email: String, password: String, confirmPassword: String, phoneNumber: String): String {
+    private fun getValidationErrorMessage(
+        email: String,
+        password: String,
+        confirmPassword: String,
+        phoneNumber: String
+    ): String {
         val errorMessage = StringBuilder("Please fill in the following fields with valid information:\n")
 
         if (email.isBlank() || !isValidEmail(email)) {
@@ -237,5 +325,14 @@ class RegisterUsers : AppCompatActivity() {
     private fun clearPasswordFields() {
         agencypassword.text.clear()
         agencycnfpassword.text.clear()
+    }
+
+    private interface LocationCallback {
+        fun onLocationReceived(latitude: Double, longitude: Double)
+        fun onLocationError(error: String)
+    }
+
+    companion object {
+        const val LOCATION_PERMISSION_REQUEST_CODE = 1001
     }
 }

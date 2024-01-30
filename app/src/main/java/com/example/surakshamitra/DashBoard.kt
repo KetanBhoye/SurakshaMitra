@@ -2,11 +2,11 @@
 
 package com.example.surakshamitra
 
+import PanicFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.surakshamitra.fragments.HomeFragment
-import com.example.surakshamitra.fragments.PanicFragment
 import com.example.surakshamitra.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
