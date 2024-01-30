@@ -32,12 +32,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
+            android:id="@+id/buttonShowMenu"
+            android:onClick="onButtonClick"
             android:background="@android:color/transparent"
             android:src="@drawable/bellicon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.518" />
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
