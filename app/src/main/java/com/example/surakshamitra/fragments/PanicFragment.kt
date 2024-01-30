@@ -1,4 +1,5 @@
 import android.Manifest
+import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -64,6 +65,7 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
 
         contactNearbyAgencies.setOnClickListener {
             // Get the current user's location and send the message
+            showSMSAlert()
             getCurrentLocationAndSendMessage()
         }
 
@@ -97,6 +99,16 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun showSMSAlert() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Alert Sent")
+        builder.setMessage("Emergency alert has been sent to nearby agencies.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
+
     private fun getCurrentLocationAndSendMessage() {
         val locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -108,6 +120,7 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
                 val lastLocation: Location? = locationResult.lastLocation
                 lastLocation?.let {
                     // Message to be sent
+
                     val mapsLink = "https://www.google.com/maps?q=${it.latitude},${it.longitude}"
                     val message = "Panic Alert!\nHelp needed at: $mapsLink\nPlease reach us ASAP to the given coordinates."
 

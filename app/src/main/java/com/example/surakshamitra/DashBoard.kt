@@ -1,23 +1,32 @@
-// DashBoard.kt
-
 package com.example.surakshamitra
 
 import HomeFragment
 import PanicFragment
+import android.Manifest
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
+import android.location.Location
 import android.os.Bundle
 import android.telephony.SmsManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.surakshamitra.fragments.ProfileFragment
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -36,6 +45,8 @@ class DashBoard : AppCompatActivity() {
     private lateinit var accelerometer: Sensor
     private lateinit var shakeDetector: ShakeDetector
 
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
@@ -43,7 +54,9 @@ class DashBoard : AppCompatActivity() {
         // Shake detector initialization
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
-        shakeDetector = ShakeDetector { showYesNoDialog() }
+        shakeDetector = ShakeDetector { getCurrentLocationAndSendMessage() }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -70,24 +83,50 @@ class DashBoard : AppCompatActivity() {
         loadFragment(homeFragment)
     }
 
-    private fun showYesNoDialog() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Alert Sending !!")
-        builder.setMessage("Do you want to proceed?")
-        builder.setPositiveButton("Yes") { dialog, which ->
-            sendMessage()
-            dialog.dismiss()
+    private fun getCurrentLocationAndSendMessage() {
+        val locationRequest = LocationRequest.create().apply {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-        builder.setNegativeButton("No") { dialog, which ->
-            // Handle "No" button click
-            dialog.dismiss()
+
+        val locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                super.onLocationResult(locationResult)
+                val lastLocation: Location? = locationResult.lastLocation
+                lastLocation?.let {
+                    // Message to be sent
+                    val mapsLink = "https://www.google.com/maps?q=${it.latitude},${it.longitude}"
+                    val message =
+                        "Panic Alert!\nHelp needed at: $mapsLink\nPlease reach us ASAP to the given coordinates."
+
+                    // Send the message to all agencies
+                    sendMessageToAgencies(message)
+                }
+            }
         }
-        builder.show()
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
+        } else {
+            // Request location permission
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSION_REQUEST_CODE
+            )
+        }
     }
 
-   fun sendMessage() {
+    private fun sendMessageToAgencies(message: String) {
         // Get reference to the "Agencies" node in Firebase Realtime Database
-        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Agencies")
+        val databaseReference: DatabaseReference =
+            FirebaseDatabase.getInstance().getReference("Agencies")
+
+        // Flag to track if at least one SMS is sent
+        var atLeastOneSmsSent = false
 
         // Attach a ValueEventListener to retrieve data from the "Agencies" node
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -95,15 +134,38 @@ class DashBoard : AppCompatActivity() {
                 // Loop through each child node under "Agencies"
                 for (agencySnapshot in dataSnapshot.children) {
                     val phoneNumber = agencySnapshot.child("phoneNumber").value.toString()
-                    sendSMS(phoneNumber, "Test")
+
+                    // Send the SMS with the current user's location
+                    sendSMS(phoneNumber, message)
+
+                    // Set the flag to true if at least one SMS is sent
+                    atLeastOneSmsSent = true
+                }
+
+                // Show dialogue box if at least one SMS is sent
+                if (atLeastOneSmsSent) {
+                    showSMSAlert()
                 }
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 // Handle errors here
-                Toast.makeText(this@DashBoard, "Failed to retrieve data from Firebase", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DashBoard,
+                    "Failed to retrieve data from Firebase",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
+    }
+    private fun showSMSAlert() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Alert Sent")
+        builder.setMessage("Emergency alert has been sent to nearby agencies.")
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
     private fun sendSMS(phoneNumber: String, message: String) {
@@ -111,8 +173,10 @@ class DashBoard : AppCompatActivity() {
         val sentIntent = Intent("SMS_SENT")
         val deliveredIntent = Intent("SMS_DELIVERED")
 
-        val sentPI = PendingIntent.getBroadcast(this, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
-        val deliveredPI = PendingIntent.getBroadcast(this, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
+        val sentPI =
+            PendingIntent.getBroadcast(this, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
+        val deliveredPI =
+            PendingIntent.getBroadcast(this, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
 
         // Check for message length and split it into parts if necessary
         val parts = smsManager.divideMessage(message)
@@ -139,6 +203,10 @@ class DashBoard : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE = 1
     }
 }
 
