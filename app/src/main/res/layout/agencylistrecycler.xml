@@ -4,7 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/textround"
+    >
 
     <!-- First Column -->
     <LinearLayout
@@ -16,12 +19,16 @@
             android:id="@+id/agimageView1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:scaleType="centerCrop"/>
+            android:layout_gravity="center"
+            android:scaleType="centerInside"/>
 
         <TextView
             android:id="@+id/textViewBehindImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/hepta"
+            android:textStyle="bold"
             android:text="Your Textsssssss"
             android:gravity="center"
             android:background="@android:color/transparent"/>
@@ -31,17 +38,17 @@
     <!-- Second Column -->
     <ImageView
         android:id="@+id/agimageView2"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerInside"/>
 
     <!-- Third Column -->
     <ImageView
         android:id="@+id/agimageView3"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:scaleType="centerCrop"/>
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="centerInside"/>
 
 </LinearLayout>

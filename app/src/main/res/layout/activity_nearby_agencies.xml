@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#9BE3F8"
     tools:context=".NearbyAgencies">
 
     <ImageView
@@ -45,7 +46,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/nearbyagencyrecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="600dp"
         android:paddingLeft="5dp"
         android:paddingTop="15dp"
         android:paddingRight="5dp"
@@ -56,5 +57,20 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
+        android:id="@+id/alertButton"
+        android:background="@drawable/alertbackcircle"
+        android:text="Alert!"
+        android:fontFamily="@font/hepta"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
