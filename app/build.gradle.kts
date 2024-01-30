@@ -92,9 +92,6 @@ dependencies {
     implementation ("androidx.compose.material3:material3:1.1.2")
     implementation ("com.google.android.gms:play-services-location:18.0.0")
 
-
-
-
     // Firebase Firestore
     implementation ("com.google.firebase:firebase-firestore:23.0.0")
 

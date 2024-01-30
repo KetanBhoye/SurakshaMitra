@@ -4,18 +4,26 @@ package com.example.surakshamitra
 
 import HomeFragment
 import PanicFragment
+import android.app.AlertDialog
+import android.app.PendingIntent
 import android.content.Context
+import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.telephony.SmsManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.surakshamitra.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class DashBoard : AppCompatActivity() {
 
@@ -23,32 +31,19 @@ class DashBoard : AppCompatActivity() {
     private val panicFragment = PanicFragment()
     private val profileFragment = ProfileFragment()
 
-//    shake
+    // Shake detector
     private lateinit var sensorManager: SensorManager
     private lateinit var accelerometer: Sensor
     private lateinit var shakeDetector: ShakeDetector
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
 
-//        shake Service
-//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//        val serviceIntent = Intent(this, ShakeService::class.java)
-//        serviceIntent.putExtra("android.foregroundServiceType", ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION)
-//        startForegroundService(serviceIntent)
-//    } else {
-//        startService(Intent(this, ShakeService::class.java))
-//    }
-
-
-
-
-
-//        Shake detector
+        // Shake detector initialization
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
         shakeDetector = ShakeDetector { showYesNoDialog() }
-
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -64,7 +59,6 @@ class DashBoard : AppCompatActivity() {
                     true
                 }
                 R.id.nav_profile -> {
-
                     loadFragment(profileFragment)
                     true
                 }
@@ -74,14 +68,14 @@ class DashBoard : AppCompatActivity() {
 
         // Load the home fragment by default
         loadFragment(homeFragment)
-
     }
+
     private fun showYesNoDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Alert Sending !!")
         builder.setMessage("Do you want to proceed?")
         builder.setPositiveButton("Yes") { dialog, which ->
-
+            sendMessage()
             dialog.dismiss()
         }
         builder.setNegativeButton("No") { dialog, which ->
@@ -89,6 +83,46 @@ class DashBoard : AppCompatActivity() {
             dialog.dismiss()
         }
         builder.show()
+    }
+
+   fun sendMessage() {
+        // Get reference to the "Agencies" node in Firebase Realtime Database
+        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Agencies")
+
+        // Attach a ValueEventListener to retrieve data from the "Agencies" node
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Loop through each child node under "Agencies"
+                for (agencySnapshot in dataSnapshot.children) {
+                    val phoneNumber = agencySnapshot.child("phoneNumber").value.toString()
+                    sendSMS(phoneNumber, "Test")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle errors here
+                Toast.makeText(this@DashBoard, "Failed to retrieve data from Firebase", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    private fun sendSMS(phoneNumber: String, message: String) {
+        val smsManager = SmsManager.getDefault()
+        val sentIntent = Intent("SMS_SENT")
+        val deliveredIntent = Intent("SMS_DELIVERED")
+
+        val sentPI = PendingIntent.getBroadcast(this, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
+        val deliveredPI = PendingIntent.getBroadcast(this, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
+
+        // Check for message length and split it into parts if necessary
+        val parts = smsManager.divideMessage(message)
+        val messageCount = parts.size
+
+        // Send each part of the message
+        for (i in 0 until messageCount) {
+            // Send the SMS using the default SMS manager
+            smsManager.sendTextMessage(phoneNumber, null, parts[i], sentPI, deliveredPI)
+        }
     }
 
     override fun onResume() {
@@ -107,6 +141,7 @@ class DashBoard : AppCompatActivity() {
             .commit()
     }
 }
+
 class ShakeDetector(private val onShakeListener: () -> Unit) : SensorEventListener {
 
     companion object {
