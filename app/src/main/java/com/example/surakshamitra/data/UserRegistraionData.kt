@@ -3,6 +3,8 @@ package com.example.surakshamitra.data
 import com.google.gson.Gson
 
 data class UserRegistrationData(
+    val isAuthorized: Boolean = false,
+    var authDocument: String = "",
     val username: String = "",
     val agencyName: String = "",
     val agencyType: String = "",
@@ -21,6 +23,8 @@ data class UserRegistrationData(
 
     fun toMap(): Map<String, Any?> {
         return mapOf(
+            "isAuthorized" to isAuthorized,
+            "authDocument" to authDocument,
             "username" to username,
             "agencyName" to agencyName,
             "agencyType" to agencyType,

@@ -38,12 +38,10 @@
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/agency_name_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.209" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <Button
@@ -78,7 +76,7 @@
         android:id="@+id/agency_name_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="544dp"
+        android:layout_marginBottom="568dp"
         android:background="@drawable/textround"
         android:hint="@string/agency_name"
 
@@ -114,8 +112,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/address_edit_text"
-        app:layout_constraintVertical_bias="0.22" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_number_edit_text"
+        app:layout_constraintVertical_bias="0.024" />
 
     <EditText
         android:id="@+id/phone_number_edit_text"
@@ -137,7 +135,7 @@
         android:id="@+id/total_members_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="216dp"
+        android:layout_marginBottom="252dp"
         android:background="@drawable/textround"
         android:hint="@string/total_members"
         android:paddingLeft="10sp"
@@ -151,7 +149,7 @@
         android:id="@+id/password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginBottom="192dp"
         android:background="@drawable/textround"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -165,7 +163,7 @@
         android:id="@+id/confirm_password_edit_text"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="132dp"
         android:background="@drawable/textround"
         android:hint="@string/confirm_password"
         android:inputType="textPassword"
@@ -180,7 +178,7 @@
         android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_background"
         android:fontFamily="@font/hepta"
         android:text="@string/register"
@@ -191,18 +189,29 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
+    <Button
 
-    <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/uploadImgBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/already_have_account"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.961"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_button"
-        app:layout_constraintVertical_bias="1.0" />
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/button_background"
+        android:drawableStart="@drawable/icuploadimg"
+    android:drawablePadding="8dp"
+    android:gravity="start|center_vertical"
+    android:fontFamily="@font/hepta"
+    android:text="@string/upload_authorized_id"
+    android:textColor="@color/black"
+    android:textSize="20sp"
+    app:backgroundTint="@color/lightyellow"
+    app:layout_constraintBottom_toTopOf="@+id/register_button"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.0"
+    app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

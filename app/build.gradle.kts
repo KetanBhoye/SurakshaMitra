@@ -75,6 +75,8 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("com.google.firebase:firebase-inappmessaging:20.4.0")
+    implementation("com.google.firebase:firebase-firestore:24.10.1")
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     kapt ("androidx.room:room-compiler:2.6.1")
     implementation ("androidx.core:core-ktx:1.12.0")
@@ -89,7 +91,11 @@ dependencies {
 
 
 
+    // Firebase Firestore
+    implementation ("com.google.firebase:firebase-firestore:23.0.0")
 
+    // Firebase Storage
+    implementation ("com.google.firebase:firebase-storage:20.3.0")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

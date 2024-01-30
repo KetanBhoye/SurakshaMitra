@@ -3,8 +3,10 @@ package com.example.surakshamitra
 import android.Manifest
 import android.content.pm.PackageManager
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Intent
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
@@ -22,6 +24,10 @@ import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.util.UUID
 
 class RegisterUsers : AppCompatActivity() {
 
@@ -41,7 +47,11 @@ class RegisterUsers : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private var userLatitude: String = "0.00"
     private var userLongitude: String = "0.00"
+    private var verificationDocUrl: String = ""
     private var userStatus: Boolean = false
+    private lateinit var uploadButton: Button
+    private lateinit var storageRef: StorageReference
+    private val PICK_IMAGE_REQUEST = 1
 
     // For location
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -52,6 +62,8 @@ class RegisterUsers : AppCompatActivity() {
 
         // For location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        storageRef = FirebaseStorage.getInstance().reference
+
         initializeViews()
         setupAgencyTypeSpinner()
 
@@ -62,7 +74,80 @@ class RegisterUsers : AppCompatActivity() {
         agencyRegisterBtn.setOnClickListener {
             createUserAndSignUp()
         }
+        uploadButton.setOnClickListener { chooseImage() }
     }
+    private fun chooseImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            val filePath = data.data!!
+            uploadImage(filePath)
+        }
+    }
+    private fun uploadImage(imageUri: Uri?) {
+        imageUri ?: return // Check if imageUri is null
+
+        val fileName = "${UUID.randomUUID()}.jpg"
+        val storageReference = FirebaseStorage.getInstance().reference.child("Agency Verifications Docs/$fileName")
+
+        // Create and show a progress dialog
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setMessage("Uploading Image...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
+        storageReference.putFile(imageUri)
+            .addOnProgressListener { taskSnapshot ->
+                // Update progress
+                val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount).toInt()
+                progressDialog.progress = progress
+            }
+            .addOnSuccessListener { taskSnapshot ->
+                // Image upload successful
+                progressDialog.dismiss() // Dismiss the progress dialog
+                storageReference.downloadUrl.addOnSuccessListener { uri ->
+                     verificationDocUrl = uri.toString()
+
+                    // Save the URL in Firestore or any other persistent storage
+                    saveImageUrlToFirestore(verificationDocUrl)
+
+
+
+                    Toast.makeText(applicationContext, "Image uploaded successfully", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, verificationDocUrl, Toast.LENGTH_LONG).show()
+                }
+            }
+            .addOnFailureListener {
+                // Handle upload failures
+                progressDialog.dismiss() // Dismiss the progress dialog
+                // ...
+            }
+    }
+
+    private fun saveImageUrlToFirestore(imageUrl: String) {
+        // Assuming you have initialized Firestore elsewhere in your code
+        val firestore = FirebaseFirestore.getInstance()
+
+        // Add code to save the URL to a Firestore collection/document
+        // For example:
+        val data = hashMapOf("imageUrl" to imageUrl)
+        firestore.collection("verificationDocs").add(data)
+            .addOnSuccessListener { documentReference ->
+                // Document added successfully
+                // You can add further handling if needed
+            }
+            .addOnFailureListener { e ->
+                // Handle failures
+                // ...
+            }
+    }
+
+
+
 
     private fun saveUserDataLocally() {
         val userDataJson = userRegistrationData.toJson()
@@ -83,6 +168,7 @@ class RegisterUsers : AppCompatActivity() {
         agencyRegisterBtn = findViewById(R.id.register_button)
         registrationfromExitBtn = findViewById(R.id.exitbutton)
         agencyEmail = findViewById(R.id.email_id)
+        uploadButton = findViewById(R.id.uploadImgBtn)
     }
 
     private fun setupAgencyTypeSpinner() {
@@ -210,6 +296,7 @@ class RegisterUsers : AppCompatActivity() {
         usernameInp = email.substring(0, index)
         userRegistrationData = UserRegistrationData(
             username = usernameInp,
+            authDocument = verificationDocUrl,
             agencyName = agencyNameInp.text.toString(),
             agencyType = selectedAgencyType,
             address = agencyAddressInp.text.toString(),
