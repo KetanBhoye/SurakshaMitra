@@ -12,8 +12,9 @@
         android:id="@+id/imageView"
         android:layout_width="90dp"
         android:layout_height="90dp"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         android:layout_gravity="center"
+
          />
 
     <TextView

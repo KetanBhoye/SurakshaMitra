@@ -1,5 +1,5 @@
+
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -114,27 +114,24 @@ class HomeFragment : Fragment() {
         // Populate your data list with image resources and text
         // Example:
         return listOf(
-            MyDataModel(R.drawable.img_4, "Text 1"),
-            MyDataModel(R.drawable.img_4, "Text 2"),
-            MyDataModel(R.drawable.img_4, "Text 3"),
-            MyDataModel(R.drawable.img_4, "Text 1"),
-            MyDataModel(R.drawable.img_4, "Text 2"),
-            MyDataModel(R.drawable.img_4, "Text 3"),
-            MyDataModel(R.drawable.img_4, "Text 1"),
-            MyDataModel(R.drawable.img_4, "Text 2"),
-            MyDataModel(R.drawable.img_4, "Text 3"),
-            MyDataModel(R.drawable.img_4, "Text 1"),
-            MyDataModel(R.drawable.img_4, "Text 2"),
-            MyDataModel(R.drawable.img_4, "Text 3"),
-            MyDataModel(R.drawable.img, "Text 1"),
-            MyDataModel(R.drawable.img, "Text 2"),
-            MyDataModel(R.drawable.img, "Text 3"),
-            MyDataModel(R.drawable.img, "Text 1"),
-            MyDataModel(R.drawable.img, "Text 2"),
-            MyDataModel(R.drawable.img, "Text 3"),
-            MyDataModel(R.drawable.img, "Text 1"),
-            MyDataModel(R.drawable.img, "Text 2"),
-            MyDataModel(R.drawable.img, "Text 3"),
+            MyDataModel(R.drawable.age1, "EMS"),
+            MyDataModel(R.drawable.age2, "NDRF"),
+            MyDataModel(R.drawable.age3, "FBT"),
+            MyDataModel(R.drawable.age3, "FBT"),
+            MyDataModel(R.drawable.age2, "NDRF"),
+            MyDataModel(R.drawable.age1, "EMS"),
+            MyDataModel(R.drawable.age3, "FBT"),
+            MyDataModel(R.drawable.age1, "EMS"),
+            MyDataModel(R.drawable.age2, "NDRF"),
+            MyDataModel(R.drawable.age1, "EMS"),
+            MyDataModel(R.drawable.age2, "NDRF"),
+            MyDataModel(R.drawable.age3, "FBT"),
+            MyDataModel(R.drawable.age3, "FBT"),
+            MyDataModel(R.drawable.age2, "NDRF"),
+            MyDataModel(R.drawable.age1, "EMS"),
+            MyDataModel(R.drawable.age3, "FBT"),
+            MyDataModel(R.drawable.age1, "EMS"),
+            MyDataModel(R.drawable.age2, "NDRF"),
             // Add more items as needed
         )
     }

@@ -1,0 +1,47 @@
+<!-- recycler_item_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- First Column -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/agimageView1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/textViewBehindImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Textsssssss"
+            android:gravity="center"
+            android:background="@android:color/transparent"/>
+
+    </LinearLayout>
+
+    <!-- Second Column -->
+    <ImageView
+        android:id="@+id/agimageView2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:scaleType="centerCrop"/>
+
+    <!-- Third Column -->
+    <ImageView
+        android:id="@+id/agimageView3"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:scaleType="centerCrop"/>
+
+</LinearLayout>
