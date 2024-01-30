@@ -1,10 +1,9 @@
 package com.example.surakshamitra
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
 
 class LoginSignupScreen : AppCompatActivity() {
     private lateinit var createAccount: Button
@@ -14,6 +13,13 @@ class LoginSignupScreen : AppCompatActivity() {
         setContentView(R.layout.activity_login_signup_screen)
         supportActionBar?.hide()
 
+//        val shakeServiceIntent = Intent(this, ShakeService::class.java)
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            startForegroundService(shakeServiceIntent)
+//        } else {
+//            startService(shakeServiceIntent)
+//        }
 
         createAccount = findViewById(R.id.createloginBtn)
         loginUser = findViewById(R.id.loginBtn)
