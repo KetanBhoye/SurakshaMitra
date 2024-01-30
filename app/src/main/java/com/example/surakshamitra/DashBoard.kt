@@ -7,8 +7,11 @@ import PanicFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.surakshamitra.fragments.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class DashBoard : AppCompatActivity() {
 
@@ -19,6 +22,9 @@ class DashBoard : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dash_board)
+
+
+
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottomNavigationView)
 
@@ -44,6 +50,7 @@ class DashBoard : AppCompatActivity() {
 
         // Load the home fragment by default
         loadFragment(homeFragment)
+
     }
 
     private fun loadFragment(fragment: Fragment) {

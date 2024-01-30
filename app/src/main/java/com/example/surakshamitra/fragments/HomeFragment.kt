@@ -8,12 +8,17 @@ import android.widget.PopupMenu
 import android.widget.Switch
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.surakshamitra.MyAdapter
+import com.example.surakshamitra.MyDataModel
 import com.example.surakshamitra.R
 
 class HomeFragment : Fragment() {
 
     private val PREFS_NAME = "MyPrefsFile"
-
+    private val dataList = getDataList() // Implement this method to provide your data
+    private lateinit var adapter: MyAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,6 +29,12 @@ class HomeFragment : Fragment() {
         view.findViewById<View>(R.id.buttonShowMenu).setOnClickListener {
             showPopupMenu(view)
         }
+
+        // Set up RecyclerView
+        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
+        adapter = MyAdapter(requireContext(), dataList)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        recyclerView.adapter = adapter
 
         // Restore the state of the switches when the fragment is created
         restoreSwitchStates(view)
@@ -97,4 +108,35 @@ class HomeFragment : Fragment() {
             popup?.menu?.findItem(R.id.services)?.isChecked = it.isChecked
         }
     }
+
+
+    private fun getDataList(): List<MyDataModel> {
+        // Populate your data list with image resources and text
+        // Example:
+        return listOf(
+            MyDataModel(R.drawable.img_4, "Text 1"),
+            MyDataModel(R.drawable.img_4, "Text 2"),
+            MyDataModel(R.drawable.img_4, "Text 3"),
+            MyDataModel(R.drawable.img_4, "Text 1"),
+            MyDataModel(R.drawable.img_4, "Text 2"),
+            MyDataModel(R.drawable.img_4, "Text 3"),
+            MyDataModel(R.drawable.img_4, "Text 1"),
+            MyDataModel(R.drawable.img_4, "Text 2"),
+            MyDataModel(R.drawable.img_4, "Text 3"),
+            MyDataModel(R.drawable.img_4, "Text 1"),
+            MyDataModel(R.drawable.img_4, "Text 2"),
+            MyDataModel(R.drawable.img_4, "Text 3"),
+            MyDataModel(R.drawable.img, "Text 1"),
+            MyDataModel(R.drawable.img, "Text 2"),
+            MyDataModel(R.drawable.img, "Text 3"),
+            MyDataModel(R.drawable.img, "Text 1"),
+            MyDataModel(R.drawable.img, "Text 2"),
+            MyDataModel(R.drawable.img, "Text 3"),
+            MyDataModel(R.drawable.img, "Text 1"),
+            MyDataModel(R.drawable.img, "Text 2"),
+            MyDataModel(R.drawable.img, "Text 3"),
+            // Add more items as needed
+        )
+    }
+
 }
