@@ -24,6 +24,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.google.firebase.auth.FirebaseAuth
@@ -55,6 +56,8 @@ class NearbyAgencies : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nearby_agencies)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val alertButton: Button = findViewById(R.id.alertButton)
 

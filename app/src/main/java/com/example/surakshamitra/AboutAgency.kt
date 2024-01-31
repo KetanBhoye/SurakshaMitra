@@ -29,6 +29,7 @@ class AboutAgency : AppCompatActivity() {
     private lateinit var agencyState: TextView
     private lateinit var email: String
     private lateinit var backBtn: ImageView
+
     private val agencyTypeMap = mapOf(
         "National Disaster Response Force (NDRF)" to R.drawable.ndrf,
         "State Police Departments" to R.drawable.maharastrapol,
