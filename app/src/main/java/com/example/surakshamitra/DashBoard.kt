@@ -53,7 +53,13 @@ class DashBoard : AppCompatActivity() {
         // Shake detector initialization
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)!!
-        shakeDetector = ShakeDetector { getCurrentLocationAndSendMessage() }
+        shakeDetector = ShakeDetector {
+
+            showSimpleAlert()
+
+
+
+        }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -80,6 +86,24 @@ class DashBoard : AppCompatActivity() {
 
         // Load the home fragment by default
         loadFragment(homeFragment)
+    }
+    private fun showSimpleAlert() {
+        AlertDialog.Builder(this)
+            .setTitle("Alert Title")
+            .setMessage("Sure, you want to send alert! .")
+            .setPositiveButton("Yes") { dialog, _ ->
+                // Handle the OK button click
+                // You can add your logic here
+                getCurrentLocationAndSendMessage()
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                // Handle the Cancel button click
+                // You can add your logic here or leave it empty
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
     }
 
     private fun getCurrentLocationAndSendMessage() {
