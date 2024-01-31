@@ -13,7 +13,7 @@ data class AgencyListDataModel(
     val imageResource2: Int,
     val imageResource3: Int
 )
-class AgencylistAdapter(private val dataList: List<AgencyListDataModel>) :
+class AgencylistAdapter(private var dataList: List<AgencyListDataModel>) :
     RecyclerView.Adapter<AgencylistAdapter.YourViewHolder>() {
 
     class YourViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -23,6 +23,10 @@ class AgencylistAdapter(private val dataList: List<AgencyListDataModel>) :
         val imageView3: ImageView = itemView.findViewById(R.id.agimageView3)
     }
 
+    fun setDataList(newDataList: List<AgencyListDataModel>) {
+        dataList = newDataList
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YourViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.agencylistrecycler, parent, false)
