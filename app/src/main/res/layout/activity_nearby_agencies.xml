@@ -11,6 +11,7 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/back_arrow"
+        android:onClick="goBack"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.046"
@@ -61,13 +62,13 @@
         app:layout_constraintVertical_bias="0.111" />
 
     <Button
+        android:id="@+id/alertButton"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginBottom="16dp"
-        android:id="@+id/alertButton"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/alertbackcircle"
-        android:text="Alert!"
         android:fontFamily="@font/hepta"
+        android:text="Alert !\n All"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

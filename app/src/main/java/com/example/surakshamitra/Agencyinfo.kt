@@ -1,9 +1,9 @@
+
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.surakshamitra.R
@@ -30,6 +30,7 @@ class AgencyInfo {
     private var agencyContactDetails: TextView
     private var agencyLocation: TextView
     private var agencyProfileImg: ImageView
+
     private val agencyTypeMap = mapOf(
         "National Disaster Response Force (NDRF)" to R.drawable.ndrf,
         "State Police Departments" to R.drawable.maharastrapol,

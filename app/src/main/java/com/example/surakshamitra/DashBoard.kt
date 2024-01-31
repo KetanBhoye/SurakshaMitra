@@ -18,10 +18,8 @@ import android.telephony.SmsManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.surakshamitra.fragments.NearbyAgenciesFragment
 import com.example.surakshamitra.fragments.ProfileFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -96,7 +94,7 @@ class DashBoard : AppCompatActivity() {
     }
     private fun showSimpleAlert() {
         AlertDialog.Builder(this)
-            .setTitle("Alert Title")
+            .setTitle("Confirm Alert!")
             .setMessage("Sure, you want to send alert! .")
             .setPositiveButton("Yes") { dialog, _ ->
                 // Handle the OK button click

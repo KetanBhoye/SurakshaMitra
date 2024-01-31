@@ -1,4 +1,5 @@
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.PendingIntent
 import android.content.Intent
@@ -195,6 +196,7 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun zoomToCurrentLocation() {
         // Request location updates
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->

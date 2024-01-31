@@ -31,12 +31,12 @@ class LoginSignupScreen : AppCompatActivity() {
 
         loginUser.setOnClickListener {
 
-//            intent = Intent(this, LoginScreen::class.java)
-//            startActivity(intent)
+            intent = Intent(this, LoginScreen::class.java)
+            startActivity(intent)
 //            intent = Intent(this, AlertSent::class.java)
 //            startActivity(intent)
-            intent = Intent(this, NearbyAgencies::class.java)
-            startActivity(intent)
+//            intent = Intent(this, NearbyAgencies::class.java)
+//            startActivity(intent)
         }
 
 
