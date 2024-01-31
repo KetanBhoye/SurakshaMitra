@@ -1,10 +1,13 @@
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import android.telephony.SmsManager
 import android.view.LayoutInflater
@@ -13,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -66,8 +70,14 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
 
         contactNearbyAgencies.setOnClickListener {
             // Get the current user's location and send the message
-            showSMSAlert()
-            getCurrentLocationAndSendMessage()
+            val phoneNumber = "9657796937"
+
+            // Call the function to open the dialer with the specified phone number
+//            openDialer(phoneNumber)
+
+                makePhoneCall(requireContext(),phoneNumber)
+//            showSMSAlert()
+//            getCurrentLocationAndSendMessage()
         }
 
         // Load agency data and add markers to the map
@@ -78,6 +88,38 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
 
         return view
     }
+    fun makePhoneCall(context: Context, phoneNumber: String) {
+        val callIntent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phoneNumber"))
+
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+            context.startActivity(callIntent)
+        } else {
+            // Request the CALL_PHONE permission
+            // Note: Make sure to handle the result of the permission request in the calling Activity or Fragment
+            (context as? AppCompatActivity)?.requestPermissions(
+                arrayOf(android.Manifest.permission.CALL_PHONE),
+                CALL_PHONE_PERMISSION_REQUEST_CODE
+            )
+        }
+    }
+
+//    internal companion object {
+//        private const val CALL_PHONE_PERMISSION_REQUEST_CODE = 123
+//    }
+//    private fun openDialer(phoneNumber: String) {
+//        // Create an Intent with ACTION_DIAL and a phone number Uri
+//        val dialIntent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+//
+//        // Check if there's an activity that can handle the dial Intent
+//        if (context?.let { dialIntent.resolveActivity(it.packageManager) } != null) {
+//            // Start the dialer activity
+//            startActivity(dialIntent)
+//        } else {
+//            // Handle the case where the dialer app is not available on the device
+//            // You can display an error message or provide an alternative action
+//            // For example, you can open an SMS intent or show a Toast
+//        }
+//    }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -263,5 +305,6 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE = 1
+        private const val CALL_PHONE_PERMISSION_REQUEST_CODE = 123
     }
 }
