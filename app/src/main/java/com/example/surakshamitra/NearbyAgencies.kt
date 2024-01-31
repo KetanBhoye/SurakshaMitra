@@ -14,6 +14,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -40,6 +41,7 @@ class NearbyAgencies : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var dataList: MutableList<AgencyListDataModel>
 
+
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val markersMap: MutableMap<String, Marker?> = mutableMapOf()
@@ -57,27 +59,44 @@ class NearbyAgencies : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nearby_agencies)
 
+
+
+
+
+
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         val alertButton: Button = findViewById(R.id.alertButton)
 
         alertButton.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Confirm Alert !")
-                .setMessage("Sure, you want to send alert! .")
-                .setPositiveButton("Yes") { dialog, _ ->
-                    showSMSAlert()
-                    getCurrentLocationAndSendMessage()
-                    dialog.dismiss()
-                }
-                .setNegativeButton("Cancel") { dialog, _ ->
-                    // Handle the Cancel button click
-                    // You can add your logic here or leave it empty
-                    dialog.dismiss()
-                }
-                .setCancelable(false)
-                .show()
-            startScaleAnimation(alertButton)
+
+            val noOfTeams = findViewById<EditText>(R.id.noofteams).text.toString()
+            val priority = findViewById<EditText>(R.id.seviority).text.toString()
+            Log.d("values",noOfTeams+"   "+priority)
+//            if(Integer.parseInt(noOfTeams)>5 || Integer.parseInt(noOfTeams)<=0 ){
+//                Toast.makeText(this,"No of Teams should be between 1 - 5", Toast.LENGTH_SHORT)
+//            }
+//            else if(Integer.parseInt(priority)>3 || Integer.parseInt(priority)<=0){
+//                Toast.makeText(this,"Priority should be between 1 - 3", Toast.LENGTH_SHORT)
+//            }
+//            else {
+                AlertDialog.Builder(this)
+                    .setTitle("Confirm Alert !")
+                    .setMessage("Sure, you want to send alert! .")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        showSMSAlert()
+                        getCurrentLocationAndSendMessage()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .setCancelable(false)
+                    .show()
+                startScaleAnimation(alertButton)
+
+//            }
 
 
         }
@@ -173,10 +192,18 @@ class NearbyAgencies : AppCompatActivity() {
                     // Message to be sent
 
                     val mapsLink = "https://www.google.com/maps?q=${it.latitude},${it.longitude}"
-                    val message = "Panic Alert!\nHelp needed at: $mapsLink\nPlease reach us ASAP to the given coordinates."
+
+                    val noOfTeams = findViewById<EditText>(R.id.noofteams).text.toString()
+                    val priority = findViewById<EditText>(R.id.seviority).text.toString()
+                        val message = "Panic Alert!\nHelp needed at: $mapsLink\n" +
+                                "Number of Teams: $noOfTeams\nPriority: $priority\n" +
+                                "Please reach us ASAP to the given coordinates."
+                        sendMessageToAgencies(message)
+
+
+
 
                     // Send the message to all agencies
-                    sendMessageToAgencies(message)
                 }
             }
         }

@@ -75,7 +75,7 @@ class PanicFragment : Fragment(), OnMapReadyCallback {
             // Call the function to open the dialer with the specified phone number
 //            openDialer(phoneNumber)
 
-                makePhoneCall(requireContext(),phoneNumber)
+            makePhoneCall(requireContext(),phoneNumber)
 //            showSMSAlert()
 //            getCurrentLocationAndSendMessage()
         }
