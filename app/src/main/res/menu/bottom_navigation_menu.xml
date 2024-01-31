@@ -12,6 +12,10 @@
         android:id="@+id/nav_panic"
         android:icon="@drawable/ic_panic"
         android:title="@string/panic" />
+    <item
+        android:id="@+id/nav_map"
+        android:icon="@drawable/ic_map"
+        android:title="Map" />
 
     <item
         android:id="@+id/nav_profile"

@@ -30,21 +30,8 @@
         <activity
             android:name=".NearbyAgencies"
             android:exported="false" />
-        <!-- Inside the <application> tag -->
-        <!-- <service -->
-        <!-- android:name=".ShakeService" -->
-        <!-- android:enabled="true" -->
-        <!-- android:exported="false" /> -->
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </receiver>
+
 
         <activity
             android:name=".AlertSent"

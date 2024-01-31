@@ -18,8 +18,10 @@ import android.telephony.SmsManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.surakshamitra.fragments.NearbyAgenciesFragment
 import com.example.surakshamitra.fragments.ProfileFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -73,11 +75,16 @@ class DashBoard : AppCompatActivity() {
                     true
                 }
                 R.id.nav_panic -> {
-                    loadFragment(panicFragment)
+                    val intent = Intent(this, NearbyAgencies::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.nav_profile -> {
                     loadFragment(profileFragment)
+                    true
+                }
+                R.id.nav_map->{
+                    loadFragment(panicFragment)
                     true
                 }
                 else -> false
