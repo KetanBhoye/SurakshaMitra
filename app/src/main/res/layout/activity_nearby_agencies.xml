@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9BE3F8"
+    android:background="#E2FBF5"
     tools:context=".NearbyAgencies">
 
     <ImageView
@@ -35,7 +35,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/hepta"
         android:text="Nearby Agencies"
-        android:textSize="30dp"
+        android:textSize="25dp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.578"

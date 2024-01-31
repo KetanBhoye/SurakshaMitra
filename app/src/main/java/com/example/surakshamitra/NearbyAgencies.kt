@@ -38,9 +38,9 @@ class NearbyAgencies : AppCompatActivity() {
             Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
             Animation.RELATIVE_TO_SELF, 0.5f // Pivot point of Y scaling
         )
-        scaleAnimation.duration = 200 // Animation duration in milliseconds
-        scaleAnimation.repeatCount = 2 // Number of times to repeat the animation
-        scaleAnimation.repeatMode = Animation.REVERSE // Reverse the animation after it completes
+        scaleAnimation.duration = 300 // Animation duration in milliseconds
+        scaleAnimation.repeatCount = 3 // Number of times to repeat the animation
+//        scaleAnimation.repeatMode = Animation.REVERSE // Reverse the animation after it completes
 
         view.startAnimation(scaleAnimation)
     }
@@ -48,7 +48,7 @@ class NearbyAgencies : AppCompatActivity() {
     private fun getDataList(): List<AgencyListDataModel> {
 
         return listOf(
-            AgencyListDataModel(R.drawable.age1, "Text 1", R.drawable.statuson, R.drawable.alerticon),
+            AgencyListDataModel(R.drawable.age1, "Abcdefghi", R.drawable.statuson, R.drawable.alerticon),
             AgencyListDataModel(R.drawable.age3, "Text 1", R.drawable.statuson, R.drawable.alerticon),
             AgencyListDataModel(R.drawable.age2, "Text 1", R.drawable.statusoff, R.drawable.alerticon),
             AgencyListDataModel(R.drawable.age1, "Text 1", R.drawable.statuson, R.drawable.alerticon),
