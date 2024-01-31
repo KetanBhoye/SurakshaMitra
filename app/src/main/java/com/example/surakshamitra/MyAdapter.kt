@@ -1,4 +1,5 @@
 package com.example.surakshamitra
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 data class MyDataModel(val imageRes: Int, val text: String)
-class MyAdapter(private val context: Context, private val dataList: List<MyDataModel>) :
+
+class MyAdapter(private val context: Context, private var dataList: List<MyDataModel>) :
     RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.agencyrecyclerview, parent, false)
+        val view =
+            LayoutInflater.from(context).inflate(R.layout.agencyrecyclerview, parent, false)
         return ViewHolder(view)
     }
 
@@ -26,6 +29,11 @@ class MyAdapter(private val context: Context, private val dataList: List<MyDataM
 
     override fun getItemCount(): Int {
         return dataList.size
+    }
+
+    fun setDataList(newDataList: List<MyDataModel>) {
+        dataList = newDataList
+        notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

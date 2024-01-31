@@ -1,6 +1,7 @@
-
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,34 +11,49 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.surakshamitra.LoginSignupScreen
 import com.example.surakshamitra.MyAdapter
 import com.example.surakshamitra.MyDataModel
 import com.example.surakshamitra.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+
 
 class HomeFragment : Fragment() {
 
     private val PREFS_NAME = "MyPrefsFile"
-    private val dataList = getDataList() // Implement this method to provide your data
     private lateinit var adapter: MyAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var auth: FirebaseAuth
+
+    private val agencyTypeMap = mapOf(
+        "National Disaster Response Force (NDRF)" to R.drawable.ndrf,
+        "State Police Departments" to R.drawable.maharastrapol,
+        "Fire Services" to R.drawable.firebrigade,
+        "Emergency Medical Services (EMS)" to R.drawable.ems,
+        "Indian Coast Guard" to R.drawable.indiancoastguard,
+        "Indian Search and Rescue" to R.drawable.searchandrescue
+    )
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.dashboard_fragment, container, false)
 
+        // Set up RecyclerView
+        recyclerView = view.findViewById(R.id.recyclerView)
+        adapter = MyAdapter(requireContext(), mutableListOf()) // Initialize the adapter with an empty list
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        recyclerView.adapter = adapter
+
         // Set the click listener for the button in the fragment
         view.findViewById<View>(R.id.buttonShowMenu).setOnClickListener {
             showPopupMenu(view)
         }
 
-        // Set up RecyclerView
-        val recyclerView: RecyclerView = view.findViewById(R.id.recyclerView)
-        adapter = MyAdapter(requireContext(), dataList)
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
-        recyclerView.adapter = adapter
-
-        // Restore the state of the switches when the fragment is created
-        restoreSwitchStates(view)
+        // Fetch data from Firebase and update the RecyclerView
+        getDataListFromFirebase()
 
         return view
     }
@@ -55,25 +71,21 @@ class HomeFragment : Fragment() {
         // Show the popup menu
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.active_st, R.id.services -> {
-                    val switchKey = item.itemId.toString()
-                    val switchState = !item.isChecked
-                    item.isChecked = switchState
-                    showToast("${item.title} switched to $switchState")
-                    saveSwitchState(switchKey, switchState)
-                    true
-                }
+
                 R.id.action_logout -> {
-                    showToast("Logout clicked")
+                    showToast("Logout")
+
+                    auth = FirebaseAuth.getInstance()
+                    auth.signOut()
+                    val intent = Intent(requireContext(), LoginSignupScreen::class.java)
+                    startActivity(intent)
+
                     // Add your logout logic here
                     true
                 }
                 else -> false
             }
         }
-
-        // Restore the state of the switches when the menu is shown
-        restoreSwitchStates(view, popup)
 
         popup.show()
     }
@@ -88,52 +100,35 @@ class HomeFragment : Fragment() {
         }
     }
 
-    // Restore the state of the switches from SharedPreferences
-    private fun restoreSwitchStates(view: View, popup: PopupMenu? = null) {
-        val sharedPref = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private fun getDataListFromFirebase() {
+        // Assuming "Agencies" is your DatabaseReference pointing to the root of your Agencies in the Firebase Realtime Database
+        val agenciesReference = FirebaseDatabase.getInstance().getReference("Agencies")
 
-        // Replace R.id.active_st, R.id.services with the actual IDs of your switches in the layout
-        val switch1 = view.findViewById<Switch>(R.id.active_st)
-        val switch2 = view.findViewById<Switch>(R.id.services)
-        // Add more switches as needed
+        agenciesReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val dataList = mutableListOf<MyDataModel>()
 
-        // Check if switches are found before attempting to set their state
-        switch1?.let {
-            it.isChecked = sharedPref.getBoolean("switch1", false)
-            popup?.menu?.findItem(R.id.active_st)?.isChecked = it.isChecked
-        }
+                for (agencySnapshot in dataSnapshot.children) {
+                    val agencyName = agencySnapshot.child("agencyName").getValue(String::class.java)
+                    val agencyType = agencySnapshot.child("agencyType").getValue(String::class.java)
 
-        switch2?.let {
-            it.isChecked = sharedPref.getBoolean("switch2", false)
-            popup?.menu?.findItem(R.id.services)?.isChecked = it.isChecked
-        }
+                    // Check if both agencyName and agencyType are not null before proceeding
+                    if (agencyName != null && agencyType != null) {
+                        val imageResource = agencyTypeMap[agencyType] ?: R.drawable.age1
+                        val myDataModel = MyDataModel(imageResource, agencyName)
+                        dataList.add(myDataModel)
+                    }
+                }
+
+                // Update the adapter with the new data
+                adapter.setDataList(dataList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle errors here
+                Log.e("getDataListFromFirebase", "Error: ${databaseError.message}")
+            }
+        })
     }
-
-
-    private fun getDataList(): List<MyDataModel> {
-        // Populate your data list with image resources and text
-        // Example:
-        return listOf(
-            MyDataModel(R.drawable.age1, "EMS"),
-            MyDataModel(R.drawable.age2, "NDRF"),
-            MyDataModel(R.drawable.age3, "FBT"),
-            MyDataModel(R.drawable.age3, "FBT"),
-            MyDataModel(R.drawable.age2, "NDRF"),
-            MyDataModel(R.drawable.age1, "EMS"),
-            MyDataModel(R.drawable.age3, "FBT"),
-            MyDataModel(R.drawable.age1, "EMS"),
-            MyDataModel(R.drawable.age2, "NDRF"),
-            MyDataModel(R.drawable.age1, "EMS"),
-            MyDataModel(R.drawable.age2, "NDRF"),
-            MyDataModel(R.drawable.age3, "FBT"),
-            MyDataModel(R.drawable.age3, "FBT"),
-            MyDataModel(R.drawable.age2, "NDRF"),
-            MyDataModel(R.drawable.age1, "EMS"),
-            MyDataModel(R.drawable.age3, "FBT"),
-            MyDataModel(R.drawable.age1, "EMS"),
-            MyDataModel(R.drawable.age2, "NDRF"),
-            // Add more items as needed
-        )
-    }
-
 }
+
