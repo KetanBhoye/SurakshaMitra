@@ -20,37 +20,51 @@ Through intuitive interfaces and customizable features, users can swiftly exchan
 
 ### Mobile App
 
-1. Welcome Screen:
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <p style="text-align: center; font-weight: bold;">Welcome Screen</p>
+  <div style="width: 23%; margin-bottom: 10px;">
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/fdfdadca-31dd-47a3-b025-35fef803f850" alt="Welcome Screen" style="max-width: 100%; height: auto;">
+    
+  </div>
+  <div style="width: 23%; margin-bottom: 10px;">
+     <p style="text-align: center; font-weight: bold;">Signup/Register Page</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/c3ca9ae8-13a0-40cc-aebd-8c73e2353830" alt="Signup/Register Page" style="max-width: 100%; height: auto;">
+   
+  </div>
+  <div style="width: 23%; margin-bottom: 10px;">
+    <p style="text-align: center; font-weight: bold;">Login Page</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/7342e72e-7ed5-4bef-b027-6024316498ed" alt="Login Page" style="max-width: 100%; height: auto;">
+    
+  </div>
+  <div style="width: 23%; margin-bottom: 10px;">
+    <p style="text-align: center; font-weight: bold;">Dashboard</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/8e3bcc3d-0d05-4bfc-92b9-29fe86337c72" alt="Dashboard" style="max-width: 100%; height: auto;">
+    
+  </div>
+</div>
 
-![Welcome Screen](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/fdfdadca-31dd-47a3-b025-35fef803f850)
-
-2. Signup/Register Page:
-
-![Signup/Register Page](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/c3ca9ae8-13a0-40cc-aebd-8c73e2353830)
-
-3. Login Page:
-
-![Login Page](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/7342e72e-7ed5-4bef-b027-6024316498ed)
-
-4. Dashboard:
-
-![Dashboard](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/8e3bcc3d-0d05-4bfc-92b9-29fe86337c72)
-
-5. Map View:
-
-![Map View](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/96beccc5-1305-4445-8d51-fb8130e69cbf)
-
-6. Agency Registration System:
-
-![Agency Registration System](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/d4f76ab0-bf49-4896-bdf6-2a3bc3ef6074)
-
-7. Nearby Agencies:
-
-![Nearby Agencies](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/106e44f9-ba43-4a5e-b97e-a81fb8f048f3)
-
-8. Profile Page:
-
-![Profile Page](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/02e28da3-20d5-45c8-a390-95a90130cfc1)
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <div style="width: 23%; margin-bottom: 10px;">
+     <p style="text-align: center; font-weight: bold;">Map View</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/96beccc5-1305-4445-8d51-fb8130e69cbf" alt="Map View" style="max-width: 100%; height: auto;">
+   
+  </div>
+  <div style="width: 23%; margin-bottom: 10px;">
+    <p style="text-align: center; font-weight: bold;">Agency Registration System</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/d4f76ab0-bf49-4896-bdf6-2a3bc3ef6074" alt="Agency Registration System" style="max-width: 100%; height: auto;">
+    
+  </div>
+  <div style="width: 23%; margin-bottom: 10px;">
+    <p style="text-align: center; font-weight: bold;">Nearby Agencies</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/106e44f9-ba43-4a5e-b97e-a81fb8f048f3" alt="Nearby Agencies" style="max-width: 100%; height: auto;">
+    
+  </div>
+  <div style="width: 23%; margin-bottom: 10px;">
+     <p style="text-align: center; font-weight: bold;">Profile Page</p>
+    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/02e28da3-20d5-45c8-a390-95a90130cfc1" alt="Profile Page" style="max-width: 100%; height: auto;">
+   
+  </div>
+</div>
 
 ### Admin Dashboard
 
