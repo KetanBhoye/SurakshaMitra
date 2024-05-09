@@ -16,62 +16,9 @@ Through intuitive interfaces and customizable features, users can swiftly exchan
 - Streamlined emergency response coordination
 - Community empowerment through innovative disaster management tools
 
-## Screenshots
+## Demo Video
 
-### Mobile App
+https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/e711782e-5a79-452b-9679-09f9e7e0a6e6
 
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-  <p style="text-align: center; font-weight: bold;">Welcome Screen</p>
-  <div style="width: 23%; margin-bottom: 10px;">
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/fdfdadca-31dd-47a3-b025-35fef803f850" alt="Welcome Screen" style="max-width: 100%; height: auto;">
-    
-  </div>
-  <div style="width: 23%; margin-bottom: 10px;">
-     <p style="text-align: center; font-weight: bold;">Signup/Register Page</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/c3ca9ae8-13a0-40cc-aebd-8c73e2353830" alt="Signup/Register Page" style="max-width: 100%; height: auto;">
-   
-  </div>
-  <div style="width: 23%; margin-bottom: 10px;">
-    <p style="text-align: center; font-weight: bold;">Login Page</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/7342e72e-7ed5-4bef-b027-6024316498ed" alt="Login Page" style="max-width: 100%; height: auto;">
-    
-  </div>
-  <div style="width: 23%; margin-bottom: 10px;">
-    <p style="text-align: center; font-weight: bold;">Dashboard</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/8e3bcc3d-0d05-4bfc-92b9-29fe86337c72" alt="Dashboard" style="max-width: 100%; height: auto;">
-    
-  </div>
-</div>
 
-<div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-  <div style="width: 23%; margin-bottom: 10px;">
-     <p style="text-align: center; font-weight: bold;">Map View</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/96beccc5-1305-4445-8d51-fb8130e69cbf" alt="Map View" style="max-width: 100%; height: auto;">
-   
-  </div>
-  <div style="width: 23%; margin-bottom: 10px;">
-    <p style="text-align: center; font-weight: bold;">Agency Registration System</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/d4f76ab0-bf49-4896-bdf6-2a3bc3ef6074" alt="Agency Registration System" style="max-width: 100%; height: auto;">
-    
-  </div>
-  <div style="width: 23%; margin-bottom: 10px;">
-    <p style="text-align: center; font-weight: bold;">Nearby Agencies</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/106e44f9-ba43-4a5e-b97e-a81fb8f048f3" alt="Nearby Agencies" style="max-width: 100%; height: auto;">
-    
-  </div>
-  <div style="width: 23%; margin-bottom: 10px;">
-     <p style="text-align: center; font-weight: bold;">Profile Page</p>
-    <img src="https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/02e28da3-20d5-45c8-a390-95a90130cfc1" alt="Profile Page" style="max-width: 100%; height: auto;">
-   
-  </div>
-</div>
 
-### Admin Dashboard
-
-1. Landing Page: ![image](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/fe6058cf-e6cb-4a39-81cc-fa20c4dbab28)
-
-2. Admin Sign-up Page: ![image](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/f602b08b-8f53-4070-95da-b7b430258e7a)
-
-3. Admin Sign-in Page: ![image](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/ed359cd6-e3d7-4014-a3a9-faa198c13e9d)
-
-4. Dashboard: ![image](https://github.com/KetanBhoye/SurakshaMitra/assets/77838645/6a8b15e7-9071-414a-a97c-53921b050f16)
